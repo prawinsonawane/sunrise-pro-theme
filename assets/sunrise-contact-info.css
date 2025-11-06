@@ -1,0 +1,123 @@
+/* Sunrise Pro - Contact Info Section */
+
+.sunrise-contact-info {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-contact-info__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-contact-info__grid {
+  gap: 3rem;
+}
+
+.sunrise-contact-info__item {
+  height: 100%;
+}
+
+.sunrise-contact-info__card {
+  height: 100%;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sunrise-contact-info__icon {
+  margin-bottom: 2rem;
+  color: rgb(var(--color-accent));
+}
+
+.sunrise-contact-info__title {
+  margin-bottom: 1.6rem;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-contact-info__content {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-contact-info__content p {
+  margin-bottom: 1.2rem;
+}
+
+.sunrise-contact-info__content p:last-child {
+  margin-bottom: 0;
+}
+
+.sunrise-contact-info__content strong {
+  color: rgb(var(--color-foreground));
+  font-weight: 600;
+}
+
+.sunrise-contact-info__content a {
+  color: rgb(var(--color-accent));
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sunrise-contact-info__content a:hover {
+  color: rgba(var(--color-accent), 0.8);
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-contact-info {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-contact-info__grid {
+    gap: 2rem;
+  }
+
+  .sunrise-contact-info__card {
+    padding: 2rem 1.6rem;
+  }
+
+  .sunrise-contact-info__icon {
+    margin-bottom: 1.6rem;
+  }
+
+  .sunrise-contact-info__icon svg {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .sunrise-contact-info__title {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .sunrise-contact-info__content {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-contact-info__card {
+    padding: 1.6rem 1.2rem;
+  }
+
+  .sunrise-contact-info__icon svg {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .sunrise-contact-info__title {
+    font-size: 1.8rem;
+  }
+
+  .sunrise-contact-info__content {
+    font-size: 1.3rem;
+  }
+}

@@ -1,0 +1,317 @@
+/* Sunrise Pro - Page Builder Section */
+
+.sunrise-page-builder {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-page-builder__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-page-builder__header {
+  margin-bottom: 4rem;
+}
+
+.sunrise-page-builder__title {
+  margin-bottom: 1.6rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-page-builder__title--h0 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-page-builder__title--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-page-builder__title--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-page-builder__subtitle {
+  max-width: 60rem;
+  margin: 0 auto;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-page-builder__content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.sunrise-page-builder__block {
+  width: 100%;
+}
+
+/* Text Block */
+.sunrise-page-builder__text-block {
+  padding: 3rem;
+}
+
+.sunrise-page-builder__block-heading {
+  margin-bottom: 1.6rem;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-page-builder__block-content {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-page-builder__block-content p {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-page-builder__block-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Image Block */
+.sunrise-page-builder__image-block {
+  padding: 2rem;
+}
+
+.sunrise-page-builder__image-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: var(--product-card-corner-radius);
+  overflow: hidden;
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-page-builder__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.sunrise-page-builder__image-caption {
+  text-align: center;
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.7);
+  font-style: italic;
+}
+
+/* Image Text Block */
+.sunrise-page-builder__image-text-block {
+  padding: 2rem;
+}
+
+.sunrise-page-builder__image-text-grid {
+  gap: 3rem;
+  align-items: center;
+}
+
+.sunrise-page-builder__image-text-image {
+  order: 1;
+}
+
+.sunrise-page-builder__image-text-content {
+  order: 2;
+}
+
+.sunrise-page-builder__image-text-content .sunrise-page-builder__block-heading {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-page-builder__image-text-content .sunrise-page-builder__block-content {
+  margin-bottom: 2rem;
+}
+
+.sunrise-page-builder__button {
+  margin-top: 2rem;
+}
+
+/* Video Block */
+.sunrise-page-builder__video-block {
+  padding: 2rem;
+}
+
+.sunrise-page-builder__video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  border-radius: var(--product-card-corner-radius);
+  overflow: hidden;
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-page-builder__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sunrise-page-builder__video-caption {
+  text-align: center;
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.7);
+  font-style: italic;
+}
+
+/* CTA Block */
+.sunrise-page-builder__cta-block {
+  padding: 4rem 3rem;
+  background: rgba(var(--color-accent), 0.05);
+  border: 0.1rem solid rgba(var(--color-accent), 0.1);
+}
+
+.sunrise-page-builder__cta-heading {
+  margin-bottom: 1.6rem;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-page-builder__cta-text {
+  margin-bottom: 2.4rem;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-page-builder__cta-button {
+  margin-top: 2rem;
+}
+
+/* Spacer Block */
+.sunrise-page-builder__spacer {
+  width: 100%;
+}
+
+/* Divider Block */
+.sunrise-page-builder__divider {
+  margin: 2rem 0;
+}
+
+.sunrise-page-builder__divider-line {
+  border: none;
+  height: 0.1rem;
+  background: rgba(var(--color-foreground), 0.1);
+  margin: 0;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-page-builder {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-page-builder__header {
+    margin-bottom: 3rem;
+  }
+
+  .sunrise-page-builder__title--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__title--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__title--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__subtitle {
+    font-size: 1.6rem;
+  }
+
+  .sunrise-page-builder__content {
+    gap: 2rem;
+  }
+
+  .sunrise-page-builder__text-block {
+    padding: 2rem;
+  }
+
+  .sunrise-page-builder__block-heading {
+    font-size: 2rem;
+  }
+
+  .sunrise-page-builder__block-content {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-page-builder__image-block,
+  .sunrise-page-builder__image-text-block,
+  .sunrise-page-builder__video-block {
+    padding: 1.6rem;
+  }
+
+  .sunrise-page-builder__image-text-grid {
+    gap: 2rem;
+  }
+
+  .sunrise-page-builder__cta-block {
+    padding: 3rem 2rem;
+  }
+
+  .sunrise-page-builder__cta-heading {
+    font-size: 2.4rem;
+  }
+
+  .sunrise-page-builder__cta-text {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-page-builder__title--h0 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__title--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__title--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-page-builder__subtitle {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-page-builder__text-block {
+    padding: 1.6rem;
+  }
+
+  .sunrise-page-builder__block-heading {
+    font-size: 1.8rem;
+  }
+
+  .sunrise-page-builder__block-content {
+    font-size: 1.3rem;
+  }
+
+  .sunrise-page-builder__image-block,
+  .sunrise-page-builder__image-text-block,
+  .sunrise-page-builder__video-block {
+    padding: 1.2rem;
+  }
+
+  .sunrise-page-builder__cta-block {
+    padding: 2rem 1.6rem;
+  }
+
+  .sunrise-page-builder__cta-heading {
+    font-size: 2rem;
+  }
+
+  .sunrise-page-builder__cta-text {
+    font-size: 1.4rem;
+  }
+}

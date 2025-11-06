@@ -1,0 +1,205 @@
+/* Sunrise Pro - Newsletter Section */
+
+.sunrise-newsletter {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-newsletter__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-newsletter__content {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.sunrise-newsletter__heading {
+  margin-bottom: 1.6rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-newsletter__heading--h0 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-newsletter__heading--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-newsletter__heading--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-newsletter__description {
+  margin-bottom: 3.2rem;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-newsletter__form {
+  margin-bottom: 3.2rem;
+}
+
+.sunrise-newsletter__form-wrapper {
+  display: flex;
+  gap: 1rem;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.sunrise-newsletter__input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.sunrise-newsletter__input {
+  width: 100%;
+  padding: 1.6rem 2rem;
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-radius: var(--inputs-radius);
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
+}
+
+.sunrise-newsletter__input:focus {
+  outline: none;
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-accent), 0.2);
+}
+
+.sunrise-newsletter__input::placeholder {
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.sunrise-newsletter__label {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translateY(-50%);
+  color: rgba(var(--color-foreground), 0.5);
+  font-size: 1.6rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.sunrise-newsletter__input:focus + .sunrise-newsletter__label,
+.sunrise-newsletter__input:not(:placeholder-shown) + .sunrise-newsletter__label {
+  top: 0;
+  left: 1rem;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  background: rgb(var(--color-background));
+  padding: 0 0.5rem;
+}
+
+.sunrise-newsletter__button {
+  padding: 1.6rem 3.2rem;
+  white-space: nowrap;
+  min-width: 12rem;
+}
+
+.sunrise-newsletter__message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.6rem 2rem;
+  border-radius: var(--inputs-radius);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+.sunrise-newsletter__message--success {
+  background: rgba(34, 197, 94, 0.1);
+  color: rgb(34, 197, 94);
+  border: 0.1rem solid rgba(34, 197, 94, 0.2);
+}
+
+.sunrise-newsletter__message--error {
+  background: rgba(239, 68, 68, 0.1);
+  color: rgb(239, 68, 68);
+  border: 0.1rem solid rgba(239, 68, 68, 0.2);
+}
+
+.sunrise-newsletter__success-icon,
+.sunrise-newsletter__error-icon {
+  flex-shrink: 0;
+}
+
+.sunrise-newsletter__social {
+  margin-top: 3.2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-newsletter {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-newsletter__heading--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__heading--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__heading--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__description {
+    font-size: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .sunrise-newsletter__form-wrapper {
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .sunrise-newsletter__button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .sunrise-newsletter__form {
+    margin-bottom: 2.4rem;
+  }
+
+  .sunrise-newsletter__social {
+    margin-top: 2.4rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-newsletter__heading--h0 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__heading--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__heading--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-newsletter__description {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-newsletter__input {
+    padding: 1.4rem 1.6rem;
+    font-size: 1.4rem;
+  }
+
+  .sunrise-newsletter__button {
+    padding: 1.4rem 2.4rem;
+  }
+}

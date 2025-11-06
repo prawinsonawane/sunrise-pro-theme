@@ -1,0 +1,156 @@
+{{ 'sunrise-search-results.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-search-results {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-search-results__header {
+    margin-bottom: 2rem;
+  }
+  
+  .sunrise-search-results__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-search-results__count {
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-search-results__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .sunrise-search-results__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  
+  .sunrise-search-results__empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-search-results__empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-search-results__empty-description {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  
+  .sunrise-search-results__empty-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-search-results__empty-button:hover {
+    background-color: var(--color-primary-dark);
+  }
+{%- endstyle -%}
+
+<div class="sunrise-search-results">
+  <div class="sunrise-search-results__header">
+    <h1 class="sunrise-search-results__title">
+      {%- if search.performed -%}
+        {{ 'templates.search.results_for' | t: terms: search.terms }}
+      {%- else -%}
+        {{ 'templates.search.title' | t }}
+      {%- endif -%}
+    </h1>
+    
+    {%- if search.performed -%}
+      <div class="sunrise-search-results__count">
+        {{ 'templates.search.results_with_count' | t: count: search.results_count, terms: search.terms }}
+      </div>
+    {%- endif -%}
+  </div>
+  
+  {%- if search.performed -%}
+    {%- if search.results.size > 0 -%}
+      <div class="sunrise-search-results__grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'sunrise-product-card', product: item %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="sunrise-search-results__empty">
+        <svg class="sunrise-search-results__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <h2 class="sunrise-search-results__empty-title">
+          {{ 'templates.search.no_results' | t: terms: search.terms }}
+        </h2>
+        <p class="sunrise-search-results__empty-description">
+          Try adjusting your search terms or browse our categories.
+        </p>
+        <a href="{{ routes.all_products_collection_url }}" class="sunrise-search-results__empty-button">
+          Browse All Products
+        </a>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="sunrise-search-results__empty">
+      <svg class="sunrise-search-results__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <h2 class="sunrise-search-results__empty-title">Search Products</h2>
+      <p class="sunrise-search-results__empty-description">
+        Use the search bar to find products.
+      </p>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search Results",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search Results Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on Desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

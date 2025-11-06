@@ -1,0 +1,60 @@
+/* Sunrise Pro - Announcement Bar Section */
+
+.sunrise-announcement-bar {
+  padding: var(--spacing-sections-desktop) 0;
+  background: rgb(var(--color-background));
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+
+.sunrise-announcement-bar__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-announcement-bar__content {
+  text-align: center;
+}
+
+.sunrise-announcement-bar__text {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  line-height: 1.4;
+}
+
+.sunrise-announcement-bar__link {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(var(--color-accent));
+  text-decoration: none;
+  transition: color 0.3s ease;
+  line-height: 1.4;
+}
+
+.sunrise-announcement-bar__link:hover {
+  color: rgba(var(--color-accent), 0.8);
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.2rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-announcement-bar {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-announcement-bar__text,
+  .sunrise-announcement-bar__link {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-announcement-bar__text,
+  .sunrise-announcement-bar__link {
+    font-size: 1.1rem;
+  }
+}

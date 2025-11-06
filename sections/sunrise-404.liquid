@@ -1,0 +1,113 @@
+{{ 'sunrise-404.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-404 {
+    padding: 4rem 0;
+    text-align: center;
+  }
+  
+  .sunrise-404__container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .sunrise-404__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-404__subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+  
+  .sunrise-404__description {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .sunrise-404__button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-404__button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-404 {
+      padding: 2rem 0;
+    }
+    
+    .sunrise-404__title {
+      font-size: 2rem;
+    }
+    
+    .sunrise-404__subtitle {
+      font-size: 1.125rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-404">
+  <div class="sunrise-404__container">
+    <h1 class="sunrise-404__title">{{ 'general.404.title' | t }}</h1>
+    <p class="sunrise-404__subtitle">{{ 'general.404.subtext' | t }}</p>
+    <p class="sunrise-404__description">
+      The page you're looking for might have been moved, deleted, or doesn't exist.
+    </p>
+    <a href="{{ routes.root_url }}" class="sunrise-404__button">
+      {{ 'general.breadcrumbs.home' | t }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "404 Page Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Page not found"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "The page you were looking for does not exist."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "The page you're looking for might have been moved, deleted, or doesn't exist."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Go to Homepage"
+    }
+  ]
+}
+{% endschema %}

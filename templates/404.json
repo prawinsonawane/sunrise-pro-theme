@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "sunrise_404": {
+      "type": "sunrise-404",
+      "settings": {
+        "heading": "Page not found",
+        "text": "<p>The page you were looking for does not exist.</p>",
+        "button_label": "Continue shopping",
+        "button_link": "/collections/all",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "sunrise_404"
+  ]
+}

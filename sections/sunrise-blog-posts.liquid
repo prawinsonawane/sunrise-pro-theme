@@ -1,0 +1,344 @@
+{{ 'sunrise-blog-posts.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-blog-posts {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-blog-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .sunrise-blog-posts__item {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .sunrise-blog-posts__item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sunrise-blog-posts__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .sunrise-blog-posts__content {
+    padding: 1.5rem;
+  }
+  
+  .sunrise-blog-posts__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-blog-posts__date {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-blog-posts__author {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-blog-posts__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  
+  .sunrise-blog-posts__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .sunrise-blog-posts__title a:hover {
+    color: var(--color-primary);
+  }
+  
+  .sunrise-blog-posts__excerpt {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-blog-posts__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-blog-posts__tag {
+    padding: 0.25rem 0.5rem;
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+  }
+  
+  .sunrise-blog-posts__tag:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border-color: var(--color-primary);
+  }
+  
+  .sunrise-blog-posts__read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .sunrise-blog-posts__read-more:hover {
+    color: var(--color-primary-dark);
+  }
+  
+  .sunrise-blog-posts__read-more svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .sunrise-blog-posts__read-more:hover svg {
+    transform: translateX(2px);
+  }
+  
+  .sunrise-blog-posts__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .sunrise-blog-posts__pagination-button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .sunrise-blog-posts__pagination-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border-color: var(--color-primary);
+  }
+  
+  .sunrise-blog-posts__pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .sunrise-blog-posts__pagination-info {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-blog-posts__grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .sunrise-blog-posts__content {
+      padding: 1rem;
+    }
+    
+    .sunrise-blog-posts__title {
+      font-size: 1.125rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-blog-posts">
+  {%- if blog.articles.size > 0 -%}
+    <div class="sunrise-blog-posts__grid">
+      {%- for article in blog.articles -%}
+        <article class="sunrise-blog-posts__item">
+          {%- if article.image -%}
+            <a href="{{ article.url }}">
+              {{
+                article.image
+                | image_url: width: 600
+                | image_tag:
+                  class: 'sunrise-blog-posts__image',
+                  loading: 'lazy',
+                  alt: article.image.alt | escape
+              }}
+            </a>
+          {%- endif -%}
+          
+          <div class="sunrise-blog-posts__content">
+            <div class="sunrise-blog-posts__meta">
+              <div class="sunrise-blog-posts__date">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                {{ article.published_at | date: '%B %d, %Y' }}
+              </div>
+              
+              {%- if article.author -%}
+                <div class="sunrise-blog-posts__author">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  {{ article.author }}
+                </div>
+              {%- endif -%}
+            </div>
+            
+            <h2 class="sunrise-blog-posts__title">
+              <a href="{{ article.url }}">{{ article.title }}</a>
+            </h2>
+            
+            {%- if article.excerpt != blank -%}
+              <div class="sunrise-blog-posts__excerpt">
+                {{ article.excerpt | truncate: 150 }}
+              </div>
+            {%- endif -%}
+            
+            {%- if article.tags.size > 0 -%}
+              <div class="sunrise-blog-posts__tags">
+                {%- for tag in article.tags limit: 3 -%}
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="sunrise-blog-posts__tag">
+                    {{ tag }}
+                  </a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+            
+            <a href="{{ article.url }}" class="sunrise-blog-posts__read-more">
+              {{ 'sections.blog.read_more' | t }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+    
+    {%- if paginate.pages > 1 -%}
+      <div class="sunrise-blog-posts__pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="sunrise-blog-posts__pagination-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Previous
+          </a>
+        {%- endif -%}
+        
+        <div class="sunrise-blog-posts__pagination-info">
+          Page {{ paginate.current_page }} of {{ paginate.pages }}
+        </div>
+        
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="sunrise-blog-posts__pagination-button">
+            Next
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="sunrise-blog-posts__empty">
+      <h2>No articles found</h2>
+      <p>Check back later for new content.</p>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Blog Posts Settings"
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per page",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show Featured Image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show Excerpt",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show Tags",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "excerpt_length",
+      "label": "Excerpt Length",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 150
+    }
+  ]
+}
+{% endschema %}

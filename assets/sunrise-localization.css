@@ -1,0 +1,319 @@
+/* Sunrise Pro - Localization Styles */
+
+/* RTL Support */
+[dir="rtl"] {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .sunrise-text-right {
+  text-align: left;
+}
+
+[dir="rtl"] .sunrise-flex {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .sunrise-flex--column {
+  flex-direction: column-reverse;
+}
+
+/* Language-specific typography */
+[lang="ar"] {
+  font-family: 'Arial', 'Tahoma', sans-serif;
+}
+
+[lang="he"] {
+  font-family: 'Arial', 'Tahoma', sans-serif;
+}
+
+[lang="zh"] {
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+}
+
+[lang="ja"] {
+  font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+
+[lang="ko"] {
+  font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+}
+
+[lang="th"] {
+  font-family: 'Thonburi', 'Loma', 'Utsaah', sans-serif;
+}
+
+/* Currency formatting */
+.sunrise-currency {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Number formatting */
+.sunrise-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Date formatting */
+.sunrise-date {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Responsive text sizing for different languages */
+[lang="ar"] .sunrise-text-responsive,
+[lang="he"] .sunrise-text-responsive {
+  line-height: 1.8;
+}
+
+[lang="zh"] .sunrise-text-responsive,
+[lang="ja"] .sunrise-text-responsive,
+[lang="ko"] .sunrise-text-responsive {
+  line-height: 1.6;
+}
+
+/* Button text alignment */
+[dir="rtl"] .sunrise-button {
+  text-align: center;
+}
+
+/* Form elements RTL support */
+[dir="rtl"] .sunrise-input,
+[dir="rtl"] .sunrise-textarea,
+[dir="rtl"] .sunrise-select {
+  text-align: right;
+}
+
+[dir="rtl"] .sunrise-input::placeholder,
+[dir="rtl"] .sunrise-textarea::placeholder {
+  text-align: right;
+}
+
+/* Navigation RTL support */
+[dir="rtl"] .sunrise-nav {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-nav__item {
+  margin-left: 0;
+  margin-right: 2rem;
+}
+
+[dir="rtl"] .sunrise-nav__item:last-child {
+  margin-right: 0;
+}
+
+/* Grid RTL support */
+[dir="rtl"] .sunrise-grid__item {
+  direction: rtl;
+}
+
+/* Card RTL support */
+[dir="rtl"] .sunrise-card {
+  direction: rtl;
+}
+
+/* Icon RTL support */
+[dir="rtl"] .sunrise-icon {
+  transform: scaleX(-1);
+}
+
+/* Arrow RTL support */
+[dir="rtl"] .sunrise-arrow {
+  transform: scaleX(-1);
+}
+
+/* Chevron RTL support */
+[dir="rtl"] .sunrise-chevron {
+  transform: scaleX(-1);
+}
+
+/* Social icons RTL support */
+[dir="rtl"] .sunrise-social-icons {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-social-icons__item {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+[dir="rtl"] .sunrise-social-icons__item:last-child {
+  margin-right: 0;
+}
+
+/* Footer RTL support */
+[dir="rtl"] .sunrise-footer {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-footer__content {
+  direction: rtl;
+}
+
+/* Header RTL support */
+[dir="rtl"] .sunrise-header {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-header__nav {
+  direction: rtl;
+}
+
+/* Product card RTL support */
+[dir="rtl"] .sunrise-product-card {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-product-card__content {
+  direction: rtl;
+}
+
+/* Cart RTL support */
+[dir="rtl"] .sunrise-cart {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-cart__item {
+  direction: rtl;
+}
+
+/* Search RTL support */
+[dir="rtl"] .sunrise-search {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-search__input {
+  text-align: right;
+}
+
+/* Modal RTL support */
+[dir="rtl"] .sunrise-modal {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-modal__content {
+  direction: rtl;
+}
+
+/* Tooltip RTL support */
+[dir="rtl"] .sunrise-tooltip {
+  direction: rtl;
+}
+
+/* Dropdown RTL support */
+[dir="rtl"] .sunrise-dropdown {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-dropdown__menu {
+  right: 0;
+  left: auto;
+}
+
+/* Tab RTL support */
+[dir="rtl"] .sunrise-tabs {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-tabs__nav {
+  direction: rtl;
+}
+
+/* Accordion RTL support */
+[dir="rtl"] .sunrise-accordion {
+  direction: rtl;
+}
+
+/* Breadcrumb RTL support */
+[dir="rtl"] .sunrise-breadcrumb {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-breadcrumb__item {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .sunrise-breadcrumb__item:last-child {
+  margin-right: 0;
+}
+
+[dir="rtl"] .sunrise-breadcrumb__separator {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* Pagination RTL support */
+[dir="rtl"] .sunrise-pagination {
+  direction: rtl;
+}
+
+[dir="rtl"] .sunrise-pagination__item {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .sunrise-pagination__item:last-child {
+  margin-right: 0;
+}
+
+/* Loading spinner RTL support */
+[dir="rtl"] .sunrise-spinner {
+  direction: ltr; /* Keep spinner direction consistent */
+}
+
+/* Animation RTL support */
+[dir="rtl"] .sunrise-animate--slide-in-left {
+  animation-name: slideInRight;
+}
+
+[dir="rtl"] .sunrise-animate--slide-in-right {
+  animation-name: slideInLeft;
+}
+
+/* Print styles for different languages */
+@media print {
+  [lang="ar"],
+  [lang="he"] {
+    font-size: 14pt;
+    line-height: 1.6;
+  }
+  
+  [lang="zh"],
+  [lang="ja"],
+  [lang="ko"] {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .sunrise-text {
+    color: ButtonText;
+  }
+  
+  .sunrise-background {
+    background-color: ButtonFace;
+  }
+  
+  .sunrise-border {
+    border-color: ButtonText;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .sunrise-animate,
+  .sunrise-transition {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

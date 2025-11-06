@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "sunrise_contact_hero": {
+      "type": "sunrise-contact-hero",
+      "settings": {
+        "heading": "Get in Touch",
+        "subheading": "<p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>",
+        "background_image": "",
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "sunrise_contact_info": {
+      "type": "sunrise-contact-info",
+      "settings": {
+        "show_store_info": true,
+        "show_business_hours": true,
+        "show_contact_methods": true,
+        "color_scheme": "scheme-2",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "sunrise_contact_form": {
+      "type": "sunrise-contact-form",
+      "settings": {
+        "heading": "Send us a Message",
+        "show_phone": true,
+        "show_subject": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 60
+      }
+    },
+    "sunrise_contact_map": {
+      "type": "sunrise-contact-map",
+      "settings": {
+        "heading": "Find Us",
+        "map_address": "123 Main Street, City, State 12345",
+        "map_height": 400,
+        "show_map": true,
+        "color_scheme": "scheme-2",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "sunrise_contact_hero",
+    "sunrise_contact_info",
+    "sunrise_contact_form",
+    "sunrise_contact_map"
+  ]
+}

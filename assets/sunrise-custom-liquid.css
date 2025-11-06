@@ -1,0 +1,77 @@
+/* Sunrise Pro - Custom Liquid Section */
+
+.sunrise-custom-liquid {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-custom-liquid__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-custom-liquid__content {
+  width: 100%;
+}
+
+.sunrise-custom-liquid__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20rem;
+  background: rgba(var(--color-foreground), 0.05);
+  border-radius: var(--product-card-corner-radius);
+  border: 0.2rem dashed rgba(var(--color-foreground), 0.2);
+}
+
+.sunrise-custom-liquid__placeholder-content {
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.sunrise-custom-liquid__placeholder-icon {
+  margin-bottom: 1.6rem;
+  opacity: 0.5;
+}
+
+.sunrise-custom-liquid__placeholder-content h3 {
+  margin-bottom: 0.8rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.sunrise-custom-liquid__placeholder-content p {
+  font-size: 1.4rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-custom-liquid {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-custom-liquid__placeholder {
+    min-height: 15rem;
+  }
+
+  .sunrise-custom-liquid__placeholder-content h3 {
+    font-size: 1.8rem;
+  }
+
+  .sunrise-custom-liquid__placeholder-content p {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-custom-liquid__placeholder {
+    min-height: 12rem;
+  }
+
+  .sunrise-custom-liquid__placeholder-content h3 {
+    font-size: 1.6rem;
+  }
+
+  .sunrise-custom-liquid__placeholder-content p {
+    font-size: 1.2rem;
+  }
+}

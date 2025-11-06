@@ -1,0 +1,380 @@
+{{ 'sunrise-product.css' | asset_url | stylesheet_tag }}
+
+<product-info
+  id="SunriseProduct-{{ section.id }}"
+  class="section-{{ section.id }}-padding sunrise-gradient color-{{ section.settings.color_scheme }}"
+  data-section="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-update-url="true"
+  data-url="{{ product.url }}"
+  {% if section.settings.image_zoom == 'hover' %}
+    data-zoom-on-hover
+  {% endif %}
+>
+  {{ 'sunrise-price.css' | asset_url | stylesheet_tag }}
+  {{ 'sunrise-slider.css' | asset_url | stylesheet_tag }}
+  {{ 'sunrise-rating.css' | asset_url | stylesheet_tag }}
+
+  {%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+  {%- endstyle -%}
+
+  <script src="{{ 'sunrise-product-info.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'sunrise-variant-picker.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'sunrise-product-form.js' | asset_url }}" defer="defer"></script>
+
+  {% if section.settings.image_zoom == 'hover' %}
+    <script src="{{ 'sunrise-image-zoom.js' | asset_url }}" defer="defer"></script>
+  {% endif %}
+
+  <div class="page-width">
+    <div class="sunrise-product sunrise-product--{{ section.settings.media_size }} sunrise-product--{{ section.settings.gallery_layout }} sunrise-product--mobile-{{ section.settings.mobile_thumbnails }}">
+      <div class="sunrise-product__media-wrapper">
+        <div class="sunrise-product__media sunrise-media">
+          {%- if product.selected_or_first_available_variant.featured_media != null -%}
+            {%- assign media = product.selected_or_first_available_variant.featured_media -%}
+            <div class="sunrise-media__item sunrise-media__item--single">
+              {% render 'sunrise-media', media: media, show_zoom: section.settings.image_zoom == 'hover', lazy_load: false %}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="sunrise-product__media-thumbnails">
+            {%- for media in product.media -%}
+              <div class="sunrise-media-thumbnail{% if media == product.selected_or_first_available_variant.featured_media %} sunrise-media-thumbnail--active{% endif %}">
+                {% render 'sunrise-media', media: media, show_zoom: false, lazy_load: true %}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="sunrise-product__info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+            {%- when 'text' -%}
+              <div class="sunrise-product__text sunrise-rte" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+            {%- when 'title' -%}
+              <div class="sunrise-product__title" {{ block.shopify_attributes }}>
+                <h1 class="sunrise-product__title-text">{{ product.title | escape }}</h1>
+                {%- if settings.brand_tagline != blank -%}
+                  <p class="sunrise-product__tagline">{{ settings.brand_tagline }}</p>
+                {%- endif -%}
+              </div>
+            {%- when 'price' -%}
+              <div class="sunrise-product__price sunrise-price" {{ block.shopify_attributes }}>
+                <div class="sunrise-price__container">
+                  <div class="sunrise-price__regular">
+                    <span class="sunrise-price-item sunrise-price-item--regular">
+                      {{ product.selected_or_first_available_variant.price | money }}
+                    </span>
+                    {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+                      <span class="sunrise-price-item sunrise-price-item--sale">
+                        {{ product.selected_or_first_available_variant.compare_at_price | money }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                  {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
+                    <div class="sunrise-price__unit">
+                      <span class="sunrise-price-item sunrise-price-item--unit">
+                        {{ product.selected_or_first_available_variant.unit_price | money }}
+                        {{ product.selected_or_first_available_variant.unit_price_measurement.reference_value }}
+                        {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+                      </span>
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- when 'sku' -%}
+              <div class="sunrise-product__sku" {{ block.shopify_attributes }}>
+                <span class="sunrise-sku">
+                  SKU: {{ product.selected_or_first_available_variant.sku | default: 'N/A' }}
+                </span>
+              </div>
+            {%- when 'quantity_selector' -%}
+              <div class="sunrise-product__quantity" {{ block.shopify_attributes }}>
+                <label for="Quantity-{{ section.id }}" class="sunrise-quantity-label">Quantity</label>
+                <div class="sunrise-quantity-input">
+                  <button type="button" class="sunrise-quantity-button sunrise-quantity-button--minus" aria-label="Decrease quantity">
+                    <svg class="sunrise-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </button>
+                  <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="sunrise-quantity-input__field">
+                  <button type="button" class="sunrise-quantity-button sunrise-quantity-button--plus" aria-label="Increase quantity">
+                    <svg class="sunrise-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            {%- when 'variant_picker' -%}
+              <div class="sunrise-product__variants" {{ block.shopify_attributes }}>
+                {%- unless product.has_only_default_variant -%}
+                  {%- liquid
+                    assign product_form_id = 'ProductForm-' | append: section.id
+                  -%}
+                  {% render 'sunrise-variant-picker', product: product, section: section, product_form_id: product_form_id %}
+                {%- endunless -%}
+              </div>
+            {%- when 'buy_buttons' -%}
+              <div class="sunrise-product__buttons" {{ block.shopify_attributes }}>
+                <product-form class="sunrise-product-form">
+                  <div class="sunrise-product-form__error-message-wrapper" role="alert" hidden>
+                    <span class="sunrise-product-form__error-message"></span>
+                  </div>
+
+                  {%- liquid
+                    assign product_form_id = 'ProductForm-' | append: section.id
+                  -%}
+                  {%- form 'product', product, id: product_form_id, class: 'sunrise-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId-{{ section.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <div class="sunrise-product-form__buttons">
+                      <button
+                        type="submit"
+                        name="add"
+                        class="sunrise-product-form__cart-submit sunrise-button sunrise-button--full-width sunrise-button--secondary"
+                        {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                      >
+                        <span>
+                          {%- if product.selected_or_first_available_variant.available -%}
+                            Add to cart
+                          {%- else -%}
+                            Sold out
+                          {%- endif -%}
+                        </span>
+                        <div class="sunrise-loading-overlay sunrise-spinner hidden">
+                          <svg class="sunrise-spinner__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  {%- endform -%}
+                </product-form>
+              </div>
+            {%- when 'description' -%}
+              <div class="sunrise-product__description sunrise-rte" {{ block.shopify_attributes }}>
+                {{ product.description }}
+              </div>
+            {%- when 'share' -%}
+              <div class="sunrise-product__share" {{ block.shopify_attributes }}>
+                <button type="button" class="sunrise-product__share-button sunrise-button sunrise-button--secondary">
+                  <svg class="sunrise-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                    <polyline points="16,6 12,2 8,6"></polyline>
+                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                  </svg>
+                  Share
+                </button>
+              </div>
+            {%- when 'rating' -%}
+              <div class="sunrise-product__rating" {{ block.shopify_attributes }}>
+                {%- if product.metafields.reviews.rating.value != blank -%}
+                  <div class="sunrise-rating">
+                    <div class="sunrise-rating__stars">
+                      {%- for i in (1..5) -%}
+                        <svg class="sunrise-rating__star{% if i <= product.metafields.reviews.rating.value %} sunrise-rating__star--active{% endif %}" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      {%- endfor -%}
+                    </div>
+                    <span class="sunrise-rating__text">
+                      {{ product.metafields.reviews.rating.value }} out of 5 stars
+                    </span>
+                  </div>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</product-info>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Text block",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "sku",
+      "name": "SKU",
+      "limit": 1
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1
+    },
+    {
+      "type": "rating",
+      "name": "Rating",
+      "limit": 1
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "media_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large",
+      "label": "Media size"
+    },
+    {
+      "type": "select",
+      "id": "gallery_layout",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "thumbnail",
+          "label": "Thumbnail"
+        }
+      ],
+      "default": "stacked",
+      "label": "Gallery layout"
+    },
+    {
+      "type": "select",
+      "id": "mobile_thumbnails",
+      "options": [
+        {
+          "value": "show",
+          "label": "Show thumbnails"
+        },
+        {
+          "value": "hide",
+          "label": "Hide thumbnails"
+        }
+      ],
+      "default": "hide",
+      "label": "Mobile thumbnails"
+    },
+    {
+      "type": "select",
+      "id": "image_zoom",
+      "options": [
+        {
+          "value": "lightbox",
+          "label": "Lightbox"
+        },
+        {
+          "value": "hover",
+          "label": "Hover"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "lightbox",
+      "label": "Image zoom"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

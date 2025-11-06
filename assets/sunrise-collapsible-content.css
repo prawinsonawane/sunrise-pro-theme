@@ -1,0 +1,239 @@
+/* Sunrise Pro - Collapsible Content Section */
+
+.sunrise-collapsible-content {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-collapsible-content__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-collapsible-content__header {
+  margin-bottom: 4rem;
+}
+
+.sunrise-collapsible-content__title {
+  margin-bottom: 1.6rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-collapsible-content__title--h0 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-collapsible-content__title--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-collapsible-content__title--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-collapsible-content__description {
+  max-width: 60rem;
+  margin: 0 auto;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-collapsible-content__wrapper {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.sunrise-collapsible-content__item {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-collapsible-content__item:last-child {
+  margin-bottom: 0;
+}
+
+.sunrise-collapsible-content__details {
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--product-card-corner-radius);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.sunrise-collapsible-content__details:hover {
+  border-color: rgba(var(--color-accent), 0.3);
+  box-shadow: 0 0.4rem 2rem rgba(var(--color-shadow), 0.1);
+}
+
+.sunrise-collapsible-content__details[open] {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0.4rem 2rem rgba(var(--color-accent), 0.1);
+}
+
+.sunrise-collapsible-content__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  cursor: pointer;
+  list-style: none;
+  transition: all 0.3s ease;
+  background: rgb(var(--color-background));
+}
+
+.sunrise-collapsible-content__summary:hover {
+  background: rgba(var(--color-accent), 0.05);
+}
+
+.sunrise-collapsible-content__summary::-webkit-details-marker {
+  display: none;
+}
+
+.sunrise-collapsible-content__question {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  text-align: left;
+  flex: 1;
+}
+
+.sunrise-collapsible-content__icon {
+  width: 2rem;
+  height: 2rem;
+  color: rgb(var(--color-accent));
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1.6rem;
+}
+
+.sunrise-collapsible-content__details[open] .sunrise-collapsible-content__icon--plus {
+  display: none;
+}
+
+.sunrise-collapsible-content__details[open] .sunrise-collapsible-content__icon--minus {
+  display: block;
+}
+
+.sunrise-collapsible-content__icon--plus {
+  display: block;
+}
+
+.sunrise-collapsible-content__icon--minus {
+  display: none;
+}
+
+.sunrise-collapsible-content__content {
+  padding: 0 2rem 2rem 2rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  background: rgba(var(--color-accent), 0.02);
+}
+
+.sunrise-collapsible-content__content p {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-collapsible-content__content p:last-child {
+  margin-bottom: 0;
+}
+
+.sunrise-collapsible-content__content ul,
+.sunrise-collapsible-content__content ol {
+  margin-bottom: 1.6rem;
+  padding-left: 2rem;
+}
+
+.sunrise-collapsible-content__content li {
+  margin-bottom: 0.8rem;
+}
+
+.sunrise-collapsible-content__content a {
+  color: rgb(var(--color-accent));
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.2rem;
+  transition: color 0.3s ease;
+}
+
+.sunrise-collapsible-content__content a:hover {
+  color: rgba(var(--color-accent), 0.8);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-collapsible-content {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-collapsible-content__header {
+    margin-bottom: 3rem;
+  }
+
+  .sunrise-collapsible-content__title--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__title--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__title--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__description {
+    font-size: 1.6rem;
+  }
+
+  .sunrise-collapsible-content__summary {
+    padding: 1.6rem;
+  }
+
+  .sunrise-collapsible-content__question {
+    font-size: 1.6rem;
+  }
+
+  .sunrise-collapsible-content__icon {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-left: 1.2rem;
+  }
+
+  .sunrise-collapsible-content__content {
+    padding: 0 1.6rem 1.6rem 1.6rem;
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-collapsible-content__title--h0 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__title--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__title--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-collapsible-content__description {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-collapsible-content__summary {
+    padding: 1.2rem;
+  }
+
+  .sunrise-collapsible-content__question {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-collapsible-content__content {
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    font-size: 1.3rem;
+  }
+}

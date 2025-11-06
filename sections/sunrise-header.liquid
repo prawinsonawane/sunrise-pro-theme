@@ -1,0 +1,508 @@
+{{ 'sunrise-header.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-header {
+    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 2rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 2rem;
+    backdrop-filter: blur(10px);
+    background: rgba(var(--color-background), 0.95);
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .section-header {
+    position: sticky;
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+    z-index: 100;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-header {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .sunrise-header {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<script src="{{ 'sunrise-header.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign header_tag = 'div'
+  if section.settings.sticky_header_type != 'none'
+    assign header_tag = 'sunrise-sticky-header'
+  endif
+%}
+
+<{{ header_tag }}
+  {% if header_tag == 'sunrise-sticky-header' %}
+    data-sticky-type="{{ section.settings.sticky_header_type }}"
+  {% endif %}
+  class="sunrise-header-wrapper color-{{ section.settings.color_scheme }} sunrise-gradient{% if section.settings.show_line_separator %} sunrise-header-wrapper--border-bottom{% endif %}"
+>
+  {%- liquid
+    assign social_links = false
+    assign localization_forms = false
+
+    if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank
+      assign social_links = true
+    endif
+
+    if localization.available_countries.size > 1 and section.settings.enable_country_selector or section.settings.enable_language_selector and localization.available_languages.size > 1
+      assign localization_forms = true
+    endif
+  -%}
+
+  <header class="sunrise-header sunrise-header--{{ section.settings.logo_position }} sunrise-header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} sunrise-header--has-menu{% endif %}{% if social_links %} sunrise-header--has-social{% endif %}{% if shop.customer_accounts_enabled %} sunrise-header--has-account{% endif %}{% if localization_forms %} sunrise-header--has-localizations{% endif %}">
+    
+    <!-- Mobile Menu Toggle -->
+    {%- if section.settings.menu != blank -%}
+      <button class="sunrise-mobile-menu-toggle" aria-label="Open menu">
+        <span class="sunrise-hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    {%- endif -%}
+
+    <!-- Logo -->
+    {%- if section.settings.logo_position != 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="sunrise-header__heading">
+      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="sunrise-header__heading-link link focus-inset">
+        {%- if settings.logo != blank -%}
+          <div class="sunrise-header__logo-wrapper">
+            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+            {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+            {{
+              settings.logo
+              | image_url: width: 600
+              | image_tag:
+                class: 'sunrise-header__logo motion-reduce',
+                widths: widths,
+                height: logo_height,
+                width: settings.logo_width,
+                alt: logo_alt,
+                sizes: sizes,
+                preload: true
+            }}
+          </div>
+        {%- else -%}
+          <span class="sunrise-header__text-logo">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- Navigation Menu -->
+    {%- if section.settings.menu != blank -%}
+      <nav class="sunrise-navigation" aria-label="Main navigation">
+        <ul class="sunrise-menu sunrise-menu--{{ section.settings.menu_type_desktop }}">
+          {%- for link in section.settings.menu.links -%}
+            <li class="sunrise-menu__item">
+              <a href="{{ link.url }}" class="sunrise-menu__link{% if link.active %} sunrise-menu__link--active{% endif %}">
+                {{ link.title | escape }}
+              </a>
+              {%- if link.links != blank -%}
+                <div class="sunrise-submenu">
+                  <ul class="sunrise-submenu__list">
+                    {%- for childlink in link.links -%}
+                      <li class="sunrise-submenu__item">
+                        <a href="{{ childlink.url }}" class="sunrise-submenu__link{% if childlink.active %} sunrise-submenu__link--active{% endif %}">
+                          {{ childlink.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <!-- Center Logo -->
+    {%- if section.settings.logo_position == 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="sunrise-header__heading">
+      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="sunrise-header__heading-link link focus-inset">
+        {%- if settings.logo != blank -%}
+          <div class="sunrise-header__logo-wrapper">
+            {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+            {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+            {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+            {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+            {{
+              settings.logo
+              | image_url: width: 600
+              | image_tag:
+                class: 'sunrise-header__logo',
+                widths: widths,
+                height: logo_height,
+                width: settings.logo_width,
+                alt: logo_alt,
+                sizes: sizes,
+                preload: true
+            }}
+          </div>
+        {%- else -%}
+          <span class="sunrise-header__text-logo">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+    <!-- Header Actions -->
+    <div class="sunrise-header__actions">
+      <!-- Search -->
+      <button class="sunrise-header__action sunrise-header__search-toggle" aria-label="Search">
+        <svg class="sunrise-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+
+      <!-- Account -->
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="sunrise-header__action sunrise-header__account" aria-label="Account">
+          <svg class="sunrise-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      {%- endif -%}
+
+      <!-- Cart -->
+      <a href="{{ routes.cart_url }}" class="sunrise-header__action sunrise-header__cart" id="cart-icon-bubble" aria-label="Cart">
+        <svg class="sunrise-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        {%- if cart != empty -%}
+          <span class="sunrise-cart-count">
+            {%- if cart.item_count < 100 -%}
+              {{ cart.item_count }}
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </a>
+    </div>
+  </header>
+
+  <!-- Search Modal -->
+  <div class="sunrise-search-modal" id="search-modal">
+    <div class="sunrise-search-modal__content">
+      <button class="sunrise-search-modal__close" aria-label="Close search">
+        <svg class="sunrise-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <form class="sunrise-search-form" action="{{ routes.search_url }}" method="get">
+        <div class="sunrise-search-form__field">
+          <input type="search" name="q" class="sunrise-search-form__input" placeholder="Search products..." autocomplete="off">
+          <button type="submit" class="sunrise-search-form__submit" aria-label="Search">
+            <svg class="sunrise-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  {%- if section.settings.menu != blank -%}
+    <div class="sunrise-mobile-menu" id="mobile-menu">
+      <div class="sunrise-mobile-menu__content">
+        <div class="sunrise-mobile-menu__header">
+          <h2 class="sunrise-mobile-menu__title">Menu</h2>
+          <button class="sunrise-mobile-menu__close" aria-label="Close menu">
+            <svg class="sunrise-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <nav class="sunrise-mobile-menu__nav">
+          <ul class="sunrise-mobile-menu__list">
+            {%- for link in section.settings.menu.links -%}
+              <li class="sunrise-mobile-menu__item">
+                <a href="{{ link.url }}" class="sunrise-mobile-menu__link{% if link.active %} sunrise-mobile-menu__link--active{% endif %}">
+                  {{ link.title | escape }}
+                </a>
+                {%- if link.links != blank -%}
+                  <ul class="sunrise-mobile-submenu">
+                    {%- for childlink in link.links -%}
+                      <li class="sunrise-mobile-submenu__item">
+                        <a href="{{ childlink.url }}" class="sunrise-mobile-submenu__link{% if childlink.active %} sunrise-mobile-submenu__link--active{% endif %}">
+                          {{ childlink.title | escape }}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  {%- endif -%}
+</{{ header_tag }}>
+
+{% javascript %}
+  class SunriseStickyHeader extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.header = document.querySelector('.sunrise-header');
+      this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always';
+      this.headerBounds = {};
+      this.currentScrollTop = 0;
+      this.preventReveal = false;
+
+      this.setHeaderHeight();
+      window.matchMedia('(max-width: 990px)').addEventListener('change', this.setHeaderHeight.bind(this));
+
+      if (this.headerIsAlwaysSticky) {
+        this.header.classList.add('sunrise-header--sticky');
+      }
+
+      this.onScrollHandler = this.onScroll.bind(this);
+      this.hideHeaderOnScrollUp = () => (this.preventReveal = true);
+
+      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.addEventListener('scroll', this.onScrollHandler, false);
+
+      this.createObserver();
+    }
+
+    setHeaderHeight() {
+      document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.removeEventListener('scroll', this.onScrollHandler);
+    }
+
+    createObserver() {
+      let observer = new IntersectionObserver((entries, observer) => {
+        this.headerBounds = entries[0].intersectionRect;
+        observer.disconnect();
+      });
+      observer.observe(this.header);
+    }
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('sunrise-header--scrolled');
+        if (this.preventHide) return;
+        requestAnimationFrame(this.hide.bind(this));
+      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('sunrise-header--scrolled');
+        if (!this.preventReveal) {
+          requestAnimationFrame(this.reveal.bind(this));
+        } else {
+          window.clearTimeout(this.isScrolling);
+          this.isScrolling = setTimeout(() => {
+            this.preventReveal = false;
+          }, 66);
+          requestAnimationFrame(this.hide.bind(this));
+        }
+      } else if (scrollTop <= this.headerBounds.top) {
+        this.header.classList.remove('sunrise-header--scrolled');
+        requestAnimationFrame(this.reset.bind(this));
+      }
+
+      this.currentScrollTop = scrollTop;
+    }
+
+    hide() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('sunrise-header--hidden', 'sunrise-header--sticky');
+    }
+
+    reveal() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('sunrise-header--sticky', 'sunrise-header--animate');
+      this.header.classList.remove('sunrise-header--hidden');
+    }
+
+    reset() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.remove('sunrise-header--hidden', 'sunrise-header--sticky', 'sunrise-header--animate');
+    }
+  }
+
+  customElements.define('sunrise-sticky-header', SunriseStickyHeader);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        }
+      ],
+      "default": "middle-left",
+      "label": "Logo position"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        }
+      ],
+      "default": "center",
+      "label": "Mobile logo position"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        },
+        {
+          "value": "mega",
+          "label": "Mega menu"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer"
+        }
+      ],
+      "default": "dropdown",
+      "label": "Desktop menu type"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "On scroll up"
+        },
+        {
+          "value": "always",
+          "label": "Always"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "Sticky header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "Show line separator"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "Enable country selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "Enable language selector"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ]
+}
+{% endschema %}

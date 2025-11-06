@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "sunrise_search_header": {
+      "type": "sunrise-search-header",
+      "settings": {
+        "show_search_form": true,
+        "show_results_count": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "sunrise_search_results": {
+      "type": "sunrise-search-results",
+      "settings": {
+        "results_per_page": 12,
+        "show_product_results": true,
+        "show_article_results": true,
+        "show_page_results": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "sunrise_search_header",
+    "sunrise_search_results"
+  ]
+}

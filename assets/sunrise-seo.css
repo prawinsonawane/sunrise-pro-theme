@@ -1,0 +1,338 @@
+/* Sunrise Pro - SEO Styles */
+
+/* Breadcrumbs */
+.sunrise-breadcrumbs {
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+
+.sunrise-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.4rem;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.sunrise-breadcrumbs__item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sunrise-breadcrumbs__link {
+  color: rgb(var(--color-accent));
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.sunrise-breadcrumbs__link:hover {
+  color: rgba(var(--color-accent), 0.8);
+  text-decoration: underline;
+}
+
+.sunrise-breadcrumbs__separator {
+  color: rgba(var(--color-foreground), 0.4);
+  font-weight: 300;
+}
+
+.sunrise-breadcrumbs__current {
+  color: rgb(var(--color-foreground));
+  font-weight: 500;
+}
+
+/* SEO-friendly headings */
+.sunrise-seo-heading {
+  margin-bottom: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-seo-heading--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-seo-heading--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-seo-heading--h3 {
+  font-size: calc(2.4rem * var(--font-heading-scale));
+}
+
+.sunrise-seo-heading--h4 {
+  font-size: calc(2.0rem * var(--font-heading-scale));
+}
+
+.sunrise-seo-heading--h5 {
+  font-size: calc(1.8rem * var(--font-heading-scale));
+}
+
+.sunrise-seo-heading--h6 {
+  font-size: calc(1.6rem * var(--font-heading-scale));
+}
+
+/* SEO-friendly content */
+.sunrise-seo-content {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-seo-content p {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-seo-content p:last-child {
+  margin-bottom: 0;
+}
+
+.sunrise-seo-content h1,
+.sunrise-seo-content h2,
+.sunrise-seo-content h3,
+.sunrise-seo-content h4,
+.sunrise-seo-content h5,
+.sunrise-seo-content h6 {
+  margin-top: 2.4rem;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-seo-content h1:first-child,
+.sunrise-seo-content h2:first-child,
+.sunrise-seo-content h3:first-child,
+.sunrise-seo-content h4:first-child,
+.sunrise-seo-content h5:first-child,
+.sunrise-seo-content h6:first-child {
+  margin-top: 0;
+}
+
+.sunrise-seo-content ul,
+.sunrise-seo-content ol {
+  margin-bottom: 1.6rem;
+  padding-left: 2rem;
+}
+
+.sunrise-seo-content li {
+  margin-bottom: 0.8rem;
+}
+
+.sunrise-seo-content a {
+  color: rgb(var(--color-accent));
+  text-decoration: underline;
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.2rem;
+  transition: color 0.3s ease;
+}
+
+.sunrise-seo-content a:hover {
+  color: rgba(var(--color-accent), 0.8);
+}
+
+.sunrise-seo-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--product-card-corner-radius);
+  margin: 1.6rem 0;
+}
+
+.sunrise-seo-content blockquote {
+  margin: 2.4rem 0;
+  padding: 1.6rem 2rem;
+  border-left: 0.4rem solid rgb(var(--color-accent));
+  background: rgba(var(--color-accent), 0.05);
+  font-style: italic;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+/* SEO-friendly tables */
+.sunrise-seo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.4rem 0;
+  font-size: 1.4rem;
+}
+
+.sunrise-seo-table th,
+.sunrise-seo-table td {
+  padding: 1.2rem;
+  text-align: left;
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+
+.sunrise-seo-table th {
+  background: rgba(var(--color-foreground), 0.05);
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-seo-table tr:hover {
+  background: rgba(var(--color-foreground), 0.02);
+}
+
+/* SEO-friendly lists */
+.sunrise-seo-list {
+  margin: 1.6rem 0;
+  padding-left: 2rem;
+}
+
+.sunrise-seo-list li {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.sunrise-seo-list--unordered {
+  list-style-type: disc;
+}
+
+.sunrise-seo-list--ordered {
+  list-style-type: decimal;
+}
+
+/* SEO-friendly code blocks */
+.sunrise-seo-code {
+  background: rgba(var(--color-foreground), 0.05);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--inputs-radius);
+  padding: 1.6rem;
+  margin: 1.6rem 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: rgb(var(--color-foreground));
+  overflow-x: auto;
+}
+
+.sunrise-seo-code-inline {
+  background: rgba(var(--color-foreground), 0.05);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: 0.3rem;
+  padding: 0.2rem 0.4rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 1.3rem;
+  color: rgb(var(--color-foreground));
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-breadcrumbs {
+    margin-bottom: 1.6rem;
+    padding: 0.8rem 0;
+  }
+
+  .sunrise-breadcrumbs__list {
+    font-size: 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .sunrise-breadcrumbs__item {
+    gap: 0.6rem;
+  }
+
+  .sunrise-seo-heading--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h3 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h4 {
+    font-size: calc(1.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h5 {
+    font-size: calc(1.6rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h6 {
+    font-size: calc(1.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-content {
+    font-size: 1.4rem;
+  }
+
+  .sunrise-seo-content h1,
+  .sunrise-seo-content h2,
+  .sunrise-seo-content h3,
+  .sunrise-seo-content h4,
+  .sunrise-seo-content h5,
+  .sunrise-seo-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .sunrise-seo-content ul,
+  .sunrise-seo-content ol {
+    padding-left: 1.6rem;
+  }
+
+  .sunrise-seo-content blockquote {
+    margin: 2rem 0;
+    padding: 1.2rem 1.6rem;
+  }
+
+  .sunrise-seo-table {
+    font-size: 1.2rem;
+  }
+
+  .sunrise-seo-table th,
+  .sunrise-seo-table td {
+    padding: 1rem;
+  }
+
+  .sunrise-seo-code {
+    padding: 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  .sunrise-seo-code-inline {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-breadcrumbs__list {
+    font-size: 1.1rem;
+  }
+
+  .sunrise-seo-heading--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h3 {
+    font-size: calc(1.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h4 {
+    font-size: calc(1.6rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h5 {
+    font-size: calc(1.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-heading--h6 {
+    font-size: calc(1.3rem * var(--font-heading-scale));
+  }
+
+  .sunrise-seo-content {
+    font-size: 1.3rem;
+  }
+}

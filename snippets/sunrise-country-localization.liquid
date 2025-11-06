@@ -1,0 +1,194 @@
+{%- liquid
+  assign position = localPosition | default: 'Header'
+  assign show_label = show_label | default: true
+  assign show_flag = show_flag | default: true
+  assign show_name = show_name | default: true
+  assign show_currency = show_currency | default: true
+  assign class = class | default: ''
+-%}
+
+<div class="sunrise-country-localization sunrise-country-localization--{{ position | downcase }}{% if class %} {{ class }}{% endif %}" data-localization="country">
+  {%- if show_label -%}
+    <label for="CountrySelector-{{ position }}" class="sunrise-country-localization__label">
+      {{ 'localization.country_label' | t }}
+    </label>
+  {%- endif -%}
+  
+  <div class="sunrise-country-localization__selector">
+    <select 
+      id="CountrySelector-{{ position }}" 
+      class="sunrise-country-localization__select"
+      name="country_code"
+      data-country-selector
+    >
+      {%- for country in localization.available_countries -%}
+        <option 
+          value="{{ country.iso_code }}"
+          {%- if country.iso_code == localization.country.iso_code -%} selected{%- endif -%}
+        >
+          {%- if show_flag -%}
+            <span class="sunrise-country-localization__flag">{{ country.currency.iso_code }}</span>
+          {%- endif -%}
+          {%- if show_name -%}
+            <span class="sunrise-country-localization__name">{{ country.name }}</span>
+          {%- endif -%}
+          {%- if show_currency -%}
+            <span class="sunrise-country-localization__currency">({{ country.currency.iso_code }})</span>
+          {%- endif -%}
+        </option>
+      {%- endfor -%}
+    </select>
+    
+    <div class="sunrise-country-localization__current">
+      {%- if show_flag -%}
+        <span class="sunrise-country-localization__flag">{{ localization.country.currency.iso_code }}</span>
+      {%- endif -%}
+      {%- if show_name -%}
+        <span class="sunrise-country-localization__name">{{ localization.country.name }}</span>
+      {%- endif -%}
+      {%- if show_currency -%}
+        <span class="sunrise-country-localization__currency">({{ localization.country.currency.iso_code }})</span>
+      {%- endif -%}
+      <svg class="sunrise-country-localization__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3,4.5 6,7.5 9,4.5"/>
+      </svg>
+    </div>
+  </div>
+  
+  <form class="sunrise-country-localization__form" method="post" action="/localization">
+    <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+    <input type="hidden" name="return_to" value="{{ request.path }}">
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const countrySelector = document.querySelector('#CountrySelector-{{ position }}');
+    const countryForm = document.querySelector('.sunrise-country-localization__form');
+    const currentDisplay = document.querySelector('.sunrise-country-localization__current');
+    
+    if (countrySelector && countryForm) {
+      countrySelector.addEventListener('change', function() {
+        const selectedCountry = this.value;
+        const formInput = countryForm.querySelector('input[name="country_code"]');
+        
+        if (formInput) {
+          formInput.value = selectedCountry;
+          countryForm.submit();
+        }
+      });
+    }
+    
+    // Update current display when selector changes
+    if (countrySelector && currentDisplay) {
+      countrySelector.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const flag = selectedOption.querySelector('.sunrise-country-localization__flag');
+        const name = selectedOption.querySelector('.sunrise-country-localization__name');
+        const currency = selectedOption.querySelector('.sunrise-country-localization__currency');
+        
+        if (flag && currentDisplay.querySelector('.sunrise-country-localization__flag')) {
+          currentDisplay.querySelector('.sunrise-country-localization__flag').textContent = flag.textContent;
+        }
+        
+        if (name && currentDisplay.querySelector('.sunrise-country-localization__name')) {
+          currentDisplay.querySelector('.sunrise-country-localization__name').textContent = name.textContent;
+        }
+        
+        if (currency && currentDisplay.querySelector('.sunrise-country-localization__currency')) {
+          currentDisplay.querySelector('.sunrise-country-localization__currency').textContent = currency.textContent;
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .sunrise-country-localization {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .sunrise-country-localization__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-country-localization__selector {
+    position: relative;
+  }
+  
+  .sunrise-country-localization__select {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .sunrise-country-localization__current {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+  }
+  
+  .sunrise-country-localization__current:hover {
+    border-color: var(--color-primary);
+  }
+  
+  .sunrise-country-localization__flag {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  
+  .sunrise-country-localization__name {
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+  
+  .sunrise-country-localization__currency {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-country-localization__chevron {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .sunrise-country-localization__selector:hover .sunrise-country-localization__chevron {
+    transform: rotate(180deg);
+  }
+  
+  .sunrise-country-localization__form {
+    display: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sunrise-country-localization__current {
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+    }
+    
+    .sunrise-country-localization__flag {
+      font-size: 0.75rem;
+    }
+    
+    .sunrise-country-localization__name {
+      font-size: 0.75rem;
+    }
+    
+    .sunrise-country-localization__currency {
+      font-size: 0.625rem;
+    }
+  }
+</style>

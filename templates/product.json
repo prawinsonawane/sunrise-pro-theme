@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "sunrise_product": {
+      "type": "sunrise-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "sku": {
+          "type": "sku",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "sku",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "rating",
+        "share"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "image_zoom": "lightbox",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "sunrise_product"
+  ]
+}

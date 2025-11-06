@@ -1,0 +1,161 @@
+{{ 'sunrise-collapsible-content.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-collapsible-content {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-collapsible-content {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-collapsible-content color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="page-width sunrise-collapsible-content__container">
+    {%- if section.settings.heading != blank -%}
+      <div class="sunrise-collapsible-content__header sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h2 class="sunrise-collapsible-content__title sunrise-collapsible-content__title--{{ section.settings.heading_size }}">
+          {{ section.settings.heading | escape }}
+        </h2>
+        {%- if section.settings.description != blank -%}
+          <div class="sunrise-collapsible-content__description sunrise-rte">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sunrise-collapsible-content__wrapper">
+      {%- for block in section.blocks -%}
+        <div class="sunrise-collapsible-content__item sunrise-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+          <details class="sunrise-collapsible-content__details">
+            <summary class="sunrise-collapsible-content__summary">
+              <h3 class="sunrise-collapsible-content__question">
+                {{ block.settings.heading | escape }}
+              </h3>
+              <svg class="sunrise-collapsible-content__icon sunrise-collapsible-content__icon--plus" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="10" y1="4" x2="10" y2="16"></line>
+                <line x1="4" y1="10" x2="16" y2="10"></line>
+              </svg>
+              <svg class="sunrise-collapsible-content__icon sunrise-collapsible-content__icon--minus hidden" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="4" y1="10" x2="16" y2="10"></line>
+              </svg>
+            </summary>
+            <div class="sunrise-collapsible-content__content sunrise-rte">
+              {{ block.settings.text }}
+            </div>
+          </details>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'sunrise-collapsible-content.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Collapsible content",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "collapsible_row",
+      "name": "Collapsible row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Collapsible row",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Use collapsible content for Q&A, details, sizing and anything else to help customers better understand your product.</p>",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Collapsible content",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collapsible content",
+      "blocks": [
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        },
+        {
+          "type": "collapsible_row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,116 @@
+{{ 'sunrise-predictive-search.css' | asset_url | stylesheet_tag }}
+
+<predictive-search class="sunrise-predictive-search" data-loading-text="{{ 'accessibility.loading' | t }}">
+  <form action="{{ routes.search_url }}" method="get" class="sunrise-predictive-search__form" role="search">
+    <div class="sunrise-predictive-search__input-wrapper">
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.search' | t }}"
+        class="sunrise-predictive-search__input"
+        aria-label="{{ 'general.search.search' | t }}"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+      <button type="submit" class="sunrise-predictive-search__button" aria-label="{{ 'general.search.search' | t }}">
+        <svg class="sunrise-predictive-search__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="9" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="sunrise-predictive-search__results hidden" id="predictive-search-results">
+      <div class="sunrise-predictive-search__loading">
+        <svg class="sunrise-predictive-search__spinner" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="10" cy="10" r="8"/>
+          <path d="M10 2a8 8 0 0 1 8 8"/>
+        </svg>
+        <span>{{ 'accessibility.loading' | t }}</span>
+      </div>
+
+      <div class="sunrise-predictive-search__content">
+        {%- if settings.predictive_search_enabled -%}
+          <div class="sunrise-predictive-search__section sunrise-predictive-search__section--products">
+            <h3 class="sunrise-predictive-search__section-title">{{ 'templates.search.products' | t }}</h3>
+            <div class="sunrise-predictive-search__products" id="predictive-search-products"></div>
+          </div>
+
+          <div class="sunrise-predictive-search__section sunrise-predictive-search__section--articles">
+            <h3 class="sunrise-predictive-search__section-title">{{ 'templates.search.articles' | t }}</h3>
+            <div class="sunrise-predictive-search__articles" id="predictive-search-articles"></div>
+          </div>
+
+          <div class="sunrise-predictive-search__section sunrise-predictive-search__section--pages">
+            <h3 class="sunrise-predictive-search__section-title">{{ 'templates.search.pages' | t }}</h3>
+            <div class="sunrise-predictive-search__pages" id="predictive-search-pages"></div>
+          </div>
+        {%- endif -%}
+
+        <div class="sunrise-predictive-search__footer">
+          <button type="submit" class="sunrise-predictive-search__view-all">
+            {{ 'templates.search.results_for' | t: terms: search.terms }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</predictive-search>
+
+<script src="{{ 'sunrise-predictive-search.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "predictive_search_enabled",
+      "default": true,
+      "label": "Enable predictive search",
+      "info": "Show search suggestions as you type"
+    },
+    {
+      "type": "range",
+      "id": "predictive_search_results_per_section",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Results per section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_suggestions",
+      "default": true,
+      "label": "Show search suggestions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_images",
+      "default": true,
+      "label": "Show product images in results"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_prices",
+      "default": true,
+      "label": "Show product prices in results"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Predictive search"
+    }
+  ]
+}
+{% endschema %}

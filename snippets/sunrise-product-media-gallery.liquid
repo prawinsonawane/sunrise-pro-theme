@@ -1,0 +1,161 @@
+{%- liquid
+  assign media_count = product.media.size
+  assign featured_media = product.featured_media
+  assign first_media = product.media.first
+  assign featured_media = featured_media
+  assign first_media = first_media
+-%}
+
+<div class="sunrise-product-media-gallery{% if class %} {{ class }}{% endif %}">
+  {%- if media_count > 0 -%}
+    <div class="sunrise-product-media-gallery__main">
+      <div class="sunrise-product-media-gallery__viewport" id="MediaGallery-{{ section.id }}">
+        {%- for media in product.media -%}
+          <div class="sunrise-product-media-gallery__item{% if forloop.first %} sunrise-product-media-gallery__item--active{% endif %}" data-media-id="{{ media.id }}">
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                <div class="sunrise-product-media-gallery__image-wrapper">
+                  {%- assign image_height = media.width | divided_by: media.aspect_ratio -%}
+                  {{
+                    media
+                    | image_url: width: 1200
+                    | image_tag:
+                      class: 'sunrise-product-media-gallery__image',
+                      loading: 'lazy',
+                      widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+                      height: image_height,
+                      width: media.width,
+                      alt: media.alt | escape
+                  }}
+                </div>
+              {%- when 'video' -%}
+                <div class="sunrise-product-media-gallery__video-wrapper">
+                  <video
+                    class="sunrise-product-media-gallery__video"
+                    controls
+                    preload="metadata"
+                    poster="{{ media.preview_image | image_url: width: 1200 }}"
+                  >
+                    <source src="{{ media.sources[1].url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              {%- when 'external_video' -%}
+                <div class="sunrise-product-media-gallery__external-video-wrapper">
+                  {%- if media.host == 'youtube' -%}
+                    <iframe
+                      src="https://www.youtube.com/embed/{{ media.external_id }}"
+                      class="sunrise-product-media-gallery__external-video"
+                      allow="autoplay; encrypted-media"
+                      allowfullscreen
+                      title="{{ media.alt | escape }}"
+                    ></iframe>
+                  {%- elsif media.host == 'vimeo' -%}
+                    <iframe
+                      src="https://player.vimeo.com/video/{{ media.external_id }}"
+                      class="sunrise-product-media-gallery__external-video"
+                      allow="autoplay; fullscreen"
+                      allowfullscreen
+                      title="{{ media.alt | escape }}"
+                    ></iframe>
+                  {%- endif -%}
+                </div>
+              {%- when 'model' -%}
+                <div class="sunrise-product-media-gallery__model-wrapper">
+                  <model-viewer
+                    class="sunrise-product-media-gallery__model"
+                    src="{{ media.sources[1].url }}"
+                    poster="{{ media.preview_image | image_url: width: 1200 }}"
+                    camera-controls
+                    auto-rotate
+                    ar
+                  ></model-viewer>
+                </div>
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if media_count > 1 -%}
+        <div class="sunrise-product-media-gallery__thumbnails">
+          {%- for media in product.media -%}
+            <button
+              type="button"
+              class="sunrise-product-media-gallery__thumbnail{% if forloop.first %} sunrise-product-media-gallery__thumbnail--active{% endif %}"
+              data-media-id="{{ media.id }}"
+              aria-label="View image {{ forloop.index }}"
+            >
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  {{
+                    media
+                    | image_url: width: 200
+                    | image_tag:
+                      class: 'sunrise-product-media-gallery__thumbnail-image',
+                      loading: 'lazy',
+                      width: 100,
+                      height: 100,
+                      alt: media.alt | escape
+                  }}
+                {%- when 'video' -%}
+                  <div class="sunrise-product-media-gallery__thumbnail-video">
+                    {{
+                      media.preview_image
+                      | image_url: width: 200
+                      | image_tag:
+                        class: 'sunrise-product-media-gallery__thumbnail-image',
+                        loading: 'lazy',
+                        width: 100,
+                        height: 100,
+                        alt: media.alt | escape
+                    }}
+                    <svg class="sunrise-product-media-gallery__thumbnail-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                {%- when 'external_video' -%}
+                  <div class="sunrise-product-media-gallery__thumbnail-video">
+                    {{
+                      media.preview_image
+                      | image_url: width: 200
+                      | image_tag:
+                        class: 'sunrise-product-media-gallery__thumbnail-image',
+                        loading: 'lazy',
+                        width: 100,
+                        height: 100,
+                        alt: media.alt | escape
+                    }}
+                    <svg class="sunrise-product-media-gallery__thumbnail-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                {%- when 'model' -%}
+                  <div class="sunrise-product-media-gallery__thumbnail-model">
+                    {{
+                      media.preview_image
+                      | image_url: width: 200
+                      | image_tag:
+                        class: 'sunrise-product-media-gallery__thumbnail-image',
+                        loading: 'lazy',
+                        width: 100,
+                        height: 100,
+                        alt: media.alt | escape
+                    }}
+                    <svg class="sunrise-product-media-gallery__thumbnail-model-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                  </div>
+            {%- endcase -%}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div class="sunrise-product-media-gallery__placeholder">
+      {{ 'product-1' | placeholder_svg_tag: 'sunrise-product-media-gallery__placeholder-svg' }}
+    </div>
+  {%- endif -%}
+</div>
+
+<script src="{{ 'sunrise-product-media-gallery.js' | asset_url }}" defer="defer"></script>

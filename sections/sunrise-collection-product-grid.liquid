@@ -1,0 +1,290 @@
+{{ 'sunrise-collection-product-grid.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-collection-product-grid {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-collection-product-grid__header {
+    margin-bottom: 2rem;
+  }
+  
+  .sunrise-collection-product-grid__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-collection-product-grid__description {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-collection-product-grid__count {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-collection-product-grid__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+  
+  .sunrise-collection-product-grid__filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .sunrise-collection-product-grid__filter-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+  }
+  
+  .sunrise-collection-product-grid__filter-select {
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-collection-product-grid__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .sunrise-collection-product-grid__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  
+  .sunrise-collection-product-grid__empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-collection-product-grid__empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-collection-product-grid__empty-description {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  
+  .sunrise-collection-product-grid__empty-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-collection-product-grid__empty-button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  .sunrise-collection-product-grid__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .sunrise-collection-product-grid__pagination-button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text);
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .sunrise-collection-product-grid__pagination-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border-color: var(--color-primary);
+  }
+  
+  .sunrise-collection-product-grid__pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .sunrise-collection-product-grid__pagination-info {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-collection-product-grid__grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .sunrise-collection-product-grid__filters {
+      flex-direction: column;
+    }
+    
+    .sunrise-collection-product-grid__title {
+      font-size: 1.75rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-collection-product-grid">
+  <div class="sunrise-collection-product-grid__header">
+    <h1 class="sunrise-collection-product-grid__title">{{ collection.title }}</h1>
+    
+    {%- if collection.description != blank -%}
+      <div class="sunrise-collection-product-grid__description">
+        {{ collection.description }}
+      </div>
+    {%- endif -%}
+    
+    <div class="sunrise-collection-product-grid__count">
+      {{ collection.products_count }} {{ 'sections.collection_list.product_count' | t: count: collection.products_count }}
+    </div>
+  </div>
+  
+  {%- if collection.products.size > 0 -%}
+    <div class="sunrise-collection-product-grid__filters">
+      <div class="sunrise-collection-product-grid__filter">
+        <label class="sunrise-collection-product-grid__filter-label" for="sort-by">Sort by</label>
+        <select id="sort-by" class="sunrise-collection-product-grid__filter-select" onchange="window.location.href = this.value">
+          <option value="{{ collection.url }}?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+          <option value="{{ collection.url }}?sort_by=title-ascending" {% if collection.sort_by == 'title-ascending' %}selected{% endif %}>A-Z</option>
+          <option value="{{ collection.url }}?sort_by=title-descending" {% if collection.sort_by == 'title-descending' %}selected{% endif %}>Z-A</option>
+          <option value="{{ collection.url }}?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+          <option value="{{ collection.url }}?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+          <option value="{{ collection.url }}?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="sunrise-collection-product-grid__grid">
+      {%- for product in collection.products -%}
+        {% render 'sunrise-product-card', product: product %}
+      {%- endfor -%}
+    </div>
+    
+    {%- if paginate.pages > 1 -%}
+      <div class="sunrise-collection-product-grid__pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="sunrise-collection-product-grid__pagination-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Previous
+          </a>
+        {%- endif -%}
+        
+        <div class="sunrise-collection-product-grid__pagination-info">
+          Page {{ paginate.current_page }} of {{ paginate.pages }}
+        </div>
+        
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="sunrise-collection-product-grid__pagination-button">
+            Next
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="sunrise-collection-product-grid__empty">
+      <svg class="sunrise-collection-product-grid__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      <h2 class="sunrise-collection-product-grid__empty-title">No products found</h2>
+      <p class="sunrise-collection-product-grid__empty-description">
+        This collection doesn't have any products yet.
+      </p>
+      <a href="{{ routes.all_products_collection_url }}" class="sunrise-collection-product-grid__empty-button">
+        Browse All Products
+      </a>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Product Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection Product Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_title",
+      "label": "Show Collection Title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Show Collection Description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show Product Count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sort_options",
+      "label": "Show Sort Options",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on Desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,105 @@
+/* Sunrise Pro - Contact Hero Section */
+
+.sunrise-contact-hero {
+  position: relative;
+  padding: var(--spacing-sections-desktop) 0;
+  overflow: hidden;
+}
+
+.sunrise-contact-hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.sunrise-contact-hero__container {
+  position: relative;
+  z-index: 2;
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-contact-hero__content {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.sunrise-contact-hero__title {
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-contact-hero__title--h0 {
+  font-size: calc(5.6rem * var(--font-heading-scale));
+}
+
+.sunrise-contact-hero__title--h1 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-contact-hero__title--h2 {
+  font-size: calc(3.6rem * var(--font-heading-scale));
+}
+
+.sunrise-contact-hero__subtitle {
+  font-size: 2rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-contact-hero__subtitle p {
+  margin-bottom: 1.6rem;
+}
+
+.sunrise-contact-hero__subtitle p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-contact-hero {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-contact-hero__title--h0 {
+    font-size: calc(3.6rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__title--h1 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__title--h2 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__subtitle {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-contact-hero__title--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__title--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__title--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-contact-hero__subtitle {
+    font-size: 1.6rem;
+  }
+}

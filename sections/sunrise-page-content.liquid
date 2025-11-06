@@ -1,0 +1,194 @@
+{{ 'sunrise-page-content.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-page-content {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-page-content__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .sunrise-page-content__header {
+    margin-bottom: 2rem;
+  }
+  
+  .sunrise-page-content__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-page-content__content {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  
+  .sunrise-page-content__content h1,
+  .sunrise-page-content__content h2,
+  .sunrise-page-content__content h3,
+  .sunrise-page-content__content h4,
+  .sunrise-page-content__content h5,
+  .sunrise-page-content__content h6 {
+    color: var(--color-text);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-page-content__content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .sunrise-page-content__content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .sunrise-page-content__content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .sunrise-page-content__content p {
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-page-content__content ul,
+  .sunrise-page-content__content ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+  
+  .sunrise-page-content__content li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-page-content__content blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: 1rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-page-content__content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+  }
+  
+  .sunrise-page-content__content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  
+  .sunrise-page-content__content th,
+  .sunrise-page-content__content td {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+  }
+  
+  .sunrise-page-content__content th {
+    background-color: var(--color-background-secondary);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  
+  .sunrise-page-content__content a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  
+  .sunrise-page-content__content a:hover {
+    text-decoration: underline;
+  }
+  
+  .sunrise-page-content__content code {
+    background-color: var(--color-background-secondary);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+    font-family: monospace;
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-page-content__content pre {
+    background-color: var(--color-background-secondary);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  
+  .sunrise-page-content__content pre code {
+    background: none;
+    padding: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-page-content {
+      padding: 1rem 0;
+    }
+    
+    .sunrise-page-content__title {
+      font-size: 1.75rem;
+    }
+    
+    .sunrise-page-content__content h1 {
+      font-size: 1.5rem;
+    }
+    
+    .sunrise-page-content__content h2 {
+      font-size: 1.25rem;
+    }
+    
+    .sunrise-page-content__content h3 {
+      font-size: 1.125rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-page-content">
+  <div class="sunrise-page-content__container">
+    <div class="sunrise-page-content__header">
+      <h1 class="sunrise-page-content__title">{{ page.title }}</h1>
+    </div>
+    
+    <div class="sunrise-page-content__content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page Content",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page Content Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Page Title",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content Width",
+      "min": 600,
+      "max": 1200,
+      "step": 100,
+      "default": 800,
+      "unit": "px"
+    }
+  ]
+}
+{% endschema %}

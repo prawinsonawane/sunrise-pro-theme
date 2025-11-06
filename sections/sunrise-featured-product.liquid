@@ -1,0 +1,253 @@
+{{ 'sunrise-featured-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign product = section.settings.product
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{%- style -%}
+  .sunrise-featured-product {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-featured-product {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-featured-product color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="page-width sunrise-featured-product__container">
+    {%- if product != blank -%}
+      <div class="sunrise-featured-product__grid sunrise-grid sunrise-grid--2-col-desktop sunrise-grid--1-col-mobile{% if section.settings.image_position == 'right' %} sunrise-featured-product__grid--reverse{% endif %}">
+        
+        <!-- Product Media -->
+        <div class="sunrise-featured-product__media sunrise-grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if product.featured_media != blank -%}
+            <div class="sunrise-featured-product__media-wrapper">
+              {%- assign image_height = product.featured_media.width | divided_by: product.featured_media.aspect_ratio -%}
+              {{
+                product.featured_media
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'sunrise-featured-product__image',
+                  loading: 'lazy',
+                  widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+                  height: image_height,
+                  width: product.featured_media.width,
+                  alt: product.featured_media.alt | escape
+              }}
+            </div>
+          {%- else -%}
+            <div class="sunrise-featured-product__placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'sunrise-featured-product__placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Product Info -->
+        <div class="sunrise-featured-product__info sunrise-grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <div class="sunrise-featured-product__content">
+            {%- if section.settings.show_vendor and product.vendor != blank -%}
+              <div class="sunrise-featured-product__vendor">
+                {{ product.vendor }}
+              </div>
+            {%- endif -%}
+
+            <h2 class="sunrise-featured-product__title sunrise-featured-product__title--{{ section.settings.heading_size }}">
+              <a href="{{ product.url }}" class="sunrise-featured-product__title-link">
+                {{ product.title | escape }}
+              </a>
+            </h2>
+
+            {%- if section.settings.show_rating and product.metafields.reviews.rating.value != blank -%}
+              <div class="sunrise-featured-product__rating">
+                {%- liquid
+                  assign rating_decimal = 0
+                  assign decimal = product.metafields.reviews.rating.value.rating | modulo: 1
+                  if decimal >= 0.3 and decimal <= 0.7
+                    assign rating_decimal = 0.5
+                  elsif decimal > 0.7
+                    assign rating_decimal = 1
+                  endif
+                -%}
+                <div class="sunrise-featured-product__stars" role="img" aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: product.metafields.reviews.rating.value, rating_max: product.metafields.reviews.rating.value.scale_max }}">
+                  {%- for i in (1..product.metafields.reviews.rating.value.scale_max) -%}
+                    {%- if i <= product.metafields.reviews.rating.value.rating -%}
+                      <svg class="sunrise-featured-product__star sunrise-featured-product__star--filled" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0l2.5 5.5L16 6l-4 4 1 5.5L8 13l-5 2.5L4 10 0 6l5.5-.5L8 0z"/>
+                      </svg>
+                    {%- elsif i == product.metafields.reviews.rating.value.rating and rating_decimal == 0.5 -%}
+                      <svg class="sunrise-featured-product__star sunrise-featured-product__star--half" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0l2.5 5.5L16 6l-4 4 1 5.5L8 13l-5 2.5L4 10 0 6l5.5-.5L8 0z"/>
+                      </svg>
+                    {%- else -%}
+                      <svg class="sunrise-featured-product__star sunrise-featured-product__star--empty" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M8 0l2.5 5.5L16 6l-4 4 1 5.5L8 13l-5 2.5L4 10 0 6l5.5-.5L8 0z"/>
+                      </svg>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+                <span class="sunrise-featured-product__rating-text">
+                  {{ product.metafields.reviews.rating.value.rating }} / {{ product.metafields.reviews.rating.value.scale_max }}
+                </span>
+              </div>
+            {%- endif -%}
+
+            <div class="sunrise-featured-product__price">
+              {%- render 'sunrise-price', price: current_variant.price, compare_at_price: current_variant.compare_at_price, unit_price: current_variant.unit_price, unit_price_measurement: current_variant.unit_price_measurement -%}
+            </div>
+
+            {%- if section.settings.show_description and product.description != blank -%}
+              <div class="sunrise-featured-product__description sunrise-rte">
+                {{ product.description | truncate: 150 }}
+              </div>
+            {%- endif -%}
+
+            {%- unless product.has_only_default_variant -%}
+              <div class="sunrise-featured-product__variants">
+                {%- render 'sunrise-variant-picker', product: product, section: section, product_form_id: product_form_id -%}
+              </div>
+            {%- endunless -%}
+
+            <div class="sunrise-featured-product__quantity">
+              {%- render 'sunrise-quantity-input', product: product, section: section, product_form_id: product_form_id, quantity: 1 -%}
+            </div>
+
+            <div class="sunrise-featured-product__buttons">
+              {%- render 'sunrise-buy-buttons', product: product, section: section, product_form_id: product_form_id -%}
+            </div>
+
+            {%- if section.settings.show_share -%}
+              <div class="sunrise-featured-product__share">
+                {%- render 'sunrise-share-button', product: product -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="sunrise-featured-product__placeholder sunrise-text-center">
+        <div class="sunrise-featured-product__placeholder-content">
+          <svg class="sunrise-featured-product__placeholder-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21,15 16,10 5,21"></polyline>
+          </svg>
+          <h3>No product selected</h3>
+          <p>Please select a product to display here.</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Image position"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": true,
+      "label": "Show rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "default": true,
+      "label": "Show description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "default": true,
+      "label": "Show share button"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product"
+    }
+  ]
+}
+{% endschema %}

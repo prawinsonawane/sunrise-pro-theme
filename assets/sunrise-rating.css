@@ -1,0 +1,447 @@
+/* Sunrise Pro - Rating Styles */
+
+.sunrise-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sunrise-rating__stars {
+  display: flex;
+  gap: 0.125rem;
+}
+
+.sunrise-rating__star {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-warning);
+  transition: color 0.3s ease;
+}
+
+.sunrise-rating__star--empty {
+  color: var(--color-border);
+}
+
+.sunrise-rating__star--half {
+  background: linear-gradient(90deg, var(--color-warning) 50%, var(--color-border) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sunrise-rating__text {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sunrise-rating__count {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.sunrise-rating__link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.sunrise-rating__link:hover {
+  color: var(--color-primary);
+}
+
+/* Interactive Rating */
+.sunrise-rating--interactive .sunrise-rating__star {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sunrise-rating--interactive .sunrise-rating__star:hover {
+  transform: scale(1.1);
+}
+
+.sunrise-rating--interactive .sunrise-rating__star:hover ~ .sunrise-rating__star {
+  color: var(--color-border);
+}
+
+/* Rating in Product Cards */
+.sunrise-product-card .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-product-card .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-product-card .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-product-card .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Product Page */
+.sunrise-product .sunrise-rating {
+  margin-bottom: 1rem;
+}
+
+.sunrise-product .sunrise-rating__star {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.sunrise-product .sunrise-rating__text {
+  font-size: 1rem;
+}
+
+.sunrise-product .sunrise-rating__count {
+  font-size: 1rem;
+}
+
+/* Rating in Featured Product */
+.sunrise-featured-product .sunrise-rating {
+  margin-bottom: 1rem;
+}
+
+.sunrise-featured-product .sunrise-rating__star {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.sunrise-featured-product .sunrise-rating__text {
+  font-size: 0.875rem;
+}
+
+.sunrise-featured-product .sunrise-rating__count {
+  font-size: 0.875rem;
+}
+
+/* Rating in Collection Grid */
+.sunrise-collection-grid .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-collection-grid .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-collection-grid .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-collection-grid .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Search Results */
+.sunrise-search-results .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-search-results .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-search-results .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-search-results .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Related Products */
+.sunrise-related-products .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-related-products .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-related-products .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-related-products .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in AI Recommendations */
+.sunrise-ai-recommendations .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-ai-recommendations .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-ai-recommendations .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-ai-recommendations .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Featured Collection */
+.sunrise-featured-collection .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-featured-collection .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-featured-collection .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-featured-collection .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Cart */
+.sunrise-cart-item .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-cart-item .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-cart-item .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-cart-item .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Cart Drawer */
+.sunrise-cart-drawer .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-cart-drawer .sunrise-rating__star {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.sunrise-cart-drawer .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-cart-drawer .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Reviews Section */
+.sunrise-reviews .sunrise-rating {
+  margin-bottom: 1rem;
+}
+
+.sunrise-reviews .sunrise-rating__star {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.sunrise-reviews .sunrise-rating__text {
+  font-size: 1rem;
+}
+
+.sunrise-reviews .sunrise-rating__count {
+  font-size: 1rem;
+}
+
+/* Rating in Testimonials */
+.sunrise-testimonials .sunrise-rating {
+  margin-bottom: 1rem;
+}
+
+.sunrise-testimonials .sunrise-rating__star {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.sunrise-testimonials .sunrise-rating__text {
+  font-size: 0.875rem;
+}
+
+.sunrise-testimonials .sunrise-rating__count {
+  font-size: 0.875rem;
+}
+
+/* Rating in Blog */
+.sunrise-blog .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-blog .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-blog .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-blog .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Email */
+.sunrise-email .sunrise-rating {
+  margin-top: 0.5rem;
+}
+
+.sunrise-email .sunrise-rating__star {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.sunrise-email .sunrise-rating__text {
+  font-size: 0.75rem;
+}
+
+.sunrise-email .sunrise-rating__count {
+  font-size: 0.75rem;
+}
+
+/* Rating in Print */
+@media print {
+  .sunrise-rating__star {
+    color: black !important;
+  }
+  
+  .sunrise-rating__star--empty {
+    color: #ccc !important;
+  }
+  
+  .sunrise-rating__text {
+    color: black !important;
+  }
+  
+  .sunrise-rating__count {
+    color: black !important;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sunrise-rating__star {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  
+  .sunrise-rating__text {
+    font-size: 0.75rem;
+  }
+  
+  .sunrise-rating__count {
+    font-size: 0.75rem;
+  }
+  
+  .sunrise-product .sunrise-rating__star {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  
+  .sunrise-product .sunrise-rating__text {
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-product .sunrise-rating__count {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sunrise-rating__star {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  
+  .sunrise-rating__text {
+    font-size: 0.75rem;
+  }
+  
+  .sunrise-rating__count {
+    font-size: 0.75rem;
+  }
+  
+  .sunrise-product .sunrise-rating__star {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .sunrise-product .sunrise-rating__text {
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-product .sunrise-rating__count {
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .sunrise-rating__star {
+    color: var(--color-warning-light);
+  }
+  
+  .sunrise-rating__star--empty {
+    color: var(--color-border-dark);
+  }
+  
+  .sunrise-rating__text {
+    color: var(--color-text-muted-dark);
+  }
+  
+  .sunrise-rating__count {
+    color: var(--color-text-muted-dark);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .sunrise-rating__star {
+    color: black;
+  }
+  
+  .sunrise-rating__star--empty {
+    color: #ccc;
+  }
+  
+  .sunrise-rating__text {
+    font-weight: 600;
+  }
+  
+  .sunrise-rating__count {
+    font-weight: 600;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .sunrise-rating__star {
+    transition: none;
+  }
+  
+  .sunrise-rating--interactive .sunrise-rating__star {
+    transition: none;
+  }
+  
+  .sunrise-rating__link {
+    transition: none;
+  }
+}

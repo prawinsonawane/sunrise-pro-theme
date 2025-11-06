@@ -1,0 +1,153 @@
+{{ 'sunrise-login-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-login-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+  
+  .sunrise-login-form__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .sunrise-login-form__field {
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-login-form__label {
+    display: block;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-login-form__input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-size: 1rem;
+  }
+  
+  .sunrise-login-form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+  }
+  
+  .sunrise-login-form__button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-login-form__button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  .sunrise-login-form__links {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .sunrise-login-form__links a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-login-form__links a:hover {
+    text-decoration: underline;
+  }
+  
+  .sunrise-login-form__register-link {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+{%- endstyle -%}
+
+<div class="sunrise-login-form">
+  <h1 class="sunrise-login-form__title">Sign In</h1>
+  
+  {%- form 'customer_login' -%}
+    <div class="sunrise-login-form__field">
+      <label for="CustomerEmail" class="sunrise-login-form__label">Email</label>
+      <input
+        type="email"
+        id="CustomerEmail"
+        name="customer[email]"
+        class="sunrise-login-form__input"
+        autocomplete="email"
+        required
+      >
+    </div>
+    
+    <div class="sunrise-login-form__field">
+      <label for="CustomerPassword" class="sunrise-login-form__label">Password</label>
+      <input
+        type="password"
+        id="CustomerPassword"
+        name="customer[password]"
+        class="sunrise-login-form__input"
+        autocomplete="current-password"
+        required
+      >
+    </div>
+    
+    <button type="submit" class="sunrise-login-form__button">
+      Sign In
+    </button>
+  {%- endform -%}
+  
+  <div class="sunrise-login-form__links">
+    <a href="{{ routes.account_recover_url }}">Forgot your password?</a>
+  </div>
+  
+  <div class="sunrise-login-form__register-link">
+    <p>Don't have an account? <a href="{{ routes.account_register_url }}">Create one</a></p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Login Form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Login Form Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Sign In"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Sign In"
+    }
+  ]
+}
+{% endschema %}

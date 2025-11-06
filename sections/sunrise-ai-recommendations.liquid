@@ -1,0 +1,321 @@
+{{ 'sunrise-ai-recommendations.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign recommendation_type = section.settings.recommendation_type
+  assign max_products = section.settings.max_products
+  assign show_product_count = section.settings.show_product_count
+  assign show_product_count = show_product_count
+  assign show_view_all = section.settings.show_view_all
+  assign view_all_text = section.settings.view_all_text
+  assign view_all_link = section.settings.view_all_link
+  assign view_all_style = section.settings.view_all_style
+  assign columns_desktop = section.settings.columns_desktop
+  assign columns_mobile = section.settings.columns_mobile
+-%}
+
+{%- style -%}
+  .sunrise-ai-recommendations {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-ai-recommendations {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-ai-recommendations color-{{ section.settings.color_scheme }} sunrise-gradient" 
+     data-recommendation-type="{{ recommendation_type }}"
+     data-max-products="{{ max_products }}"
+     data-context="{{ template.name }}"
+     data-product-id="{{ product.id | default: '' }}"
+     data-customer-id="{{ customer.id | default: '' }}">
+  
+  <div class="page-width sunrise-ai-recommendations__container">
+    
+    {%- if section.settings.heading != blank -%}
+      <div class="sunrise-ai-recommendations__header sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <h2 class="sunrise-ai-recommendations__title sunrise-ai-recommendations__title--{{ section.settings.heading_size }}">
+          {{ section.settings.heading | escape }}
+        </h2>
+        {%- if section.settings.description != blank -%}
+          <div class="sunrise-ai-recommendations__description sunrise-rte">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sunrise-ai-recommendations__content">
+      
+      {%- comment -%} Loading State {%- endcomment -%}
+      <div class="sunrise-ai-recommendations__loading sunrise-text-center" id="RecommendationsLoading">
+        <div class="sunrise-ai-recommendations__spinner">
+          <svg class="sunrise-ai-recommendations__spinner-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="16" cy="16" r="14"/>
+            <path d="M16 2a14 14 0 0 1 14 14"/>
+          </svg>
+        </div>
+        <p class="sunrise-ai-recommendations__loading-text">{{ 'sections.ai_recommendations.loading' | t }}</p>
+      </div>
+
+      {%- comment -%} Recommendations Grid {%- endcomment -%}
+      <div class="sunrise-ai-recommendations__grid sunrise-grid sunrise-grid--{{ columns_desktop }}-col-desktop sunrise-grid--{{ columns_mobile }}-col-mobile hidden" id="RecommendationsGrid">
+        <!-- Recommendations will be dynamically loaded here -->
+      </div>
+
+      {%- comment -%} Empty State {%- endcomment -%}
+      <div class="sunrise-ai-recommendations__empty sunrise-text-center hidden" id="RecommendationsEmpty">
+        <div class="sunrise-ai-recommendations__empty-content">
+          <svg class="sunrise-ai-recommendations__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+          <h3>{{ 'sections.ai_recommendations.no_recommendations' | t }}</h3>
+          <p>{{ 'sections.ai_recommendations.no_recommendations_description' | t }}</p>
+        </div>
+      </div>
+
+      {%- comment -%} Error State {%- endcomment -%}
+      <div class="sunrise-ai-recommendations__error sunrise-text-center hidden" id="RecommendationsError">
+        <div class="sunrise-ai-recommendations__error-content">
+          <svg class="sunrise-ai-recommendations__error-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <h3>{{ 'sections.ai_recommendations.error_title' | t }}</h3>
+          <p>{{ 'sections.ai_recommendations.error_description' | t }}</p>
+          <button class="sunrise-button sunrise-button--secondary" onclick="SunriseAIRecommendations.reload()">
+            {{ 'sections.ai_recommendations.retry' | t }}
+          </button>
+        </div>
+      </div>
+
+      {%- comment -%} View All Button {%- endcomment -%}
+      {%- if show_view_all and view_all_text != blank -%}
+        <div class="sunrise-ai-recommendations__footer sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <a href="{{ view_all_link | default: '/collections/all' }}" class="sunrise-button{% if view_all_style == 'secondary' %} sunrise-button--secondary{% endif %}">
+            {{ view_all_text | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'sunrise-ai-recommendations.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "AI Recommendations",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Recommendation Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Recommended for You",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "recommendation_type",
+      "options": [
+        {
+          "value": "related",
+          "label": "Related Products"
+        },
+        {
+          "value": "complementary",
+          "label": "Complementary Products"
+        },
+        {
+          "value": "trending",
+          "label": "Trending Products"
+        },
+        {
+          "value": "personalized",
+          "label": "Personalized Recommendations"
+        },
+        {
+          "value": "frequently_bought",
+          "label": "Frequently Bought Together"
+        },
+        {
+          "value": "recently_viewed",
+          "label": "Recently Viewed"
+        }
+      ],
+      "default": "related",
+      "label": "Recommendation Type"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "2",
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "header",
+      "content": "Display Options"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "default": true,
+      "label": "Show product count"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View all' button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "default": "View all products",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "view_all_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary",
+      "label": "Button style"
+    },
+    {
+      "type": "header",
+      "content": "AI Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_behavioral_tracking",
+      "default": true,
+      "label": "Enable behavioral tracking",
+      "info": "Track user interactions to improve recommendations"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_personalization",
+      "default": true,
+      "label": "Enable personalization",
+      "info": "Show personalized recommendations based on user behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ab_testing",
+      "default": false,
+      "label": "Enable A/B testing",
+      "info": "Test different recommendation algorithms"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "AI Product Recommendations"
+    }
+  ]
+}
+{% endschema %}

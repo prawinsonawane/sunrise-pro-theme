@@ -1,0 +1,309 @@
+/* Sunrise Pro - Predictive Search Section */
+
+.sunrise-predictive-search {
+  position: relative;
+  width: 100%;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.sunrise-predictive-search__form {
+  position: relative;
+  width: 100%;
+}
+
+.sunrise-predictive-search__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgb(var(--color-background));
+  border: 0.1rem solid rgba(var(--color-foreground), 0.2);
+  border-radius: var(--inputs-radius);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.sunrise-predictive-search__input-wrapper:focus-within {
+  border-color: rgb(var(--color-accent));
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-accent), 0.2);
+}
+
+.sunrise-predictive-search__input {
+  flex: 1;
+  padding: 1.6rem 2rem;
+  border: none;
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  font-size: 1.6rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.sunrise-predictive-search__input::placeholder {
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.sunrise-predictive-search__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem 2rem;
+  border: none;
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-button-text));
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sunrise-predictive-search__button:hover {
+  background: rgba(var(--color-accent), 0.9);
+}
+
+.sunrise-predictive-search__icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.sunrise-predictive-search__results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgb(var(--color-background));
+  border: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--inputs-radius);
+  box-shadow: 0 0.4rem 2rem rgba(var(--color-shadow), 0.15);
+  margin-top: 0.4rem;
+  max-height: 60rem;
+  overflow-y: auto;
+}
+
+.sunrise-predictive-search__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.sunrise-predictive-search__spinner {
+  width: 2rem;
+  height: 2rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sunrise-predictive-search__content {
+  padding: 2rem;
+}
+
+.sunrise-predictive-search__section {
+  margin-bottom: 2rem;
+}
+
+.sunrise-predictive-search__section:last-child {
+  margin-bottom: 0;
+}
+
+.sunrise-predictive-search__section-title {
+  margin-bottom: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sunrise-predictive-search__products,
+.sunrise-predictive-search__articles,
+.sunrise-predictive-search__pages {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sunrise-predictive-search__product,
+.sunrise-predictive-search__article,
+.sunrise-predictive-search__page {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  border-radius: var(--inputs-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.sunrise-predictive-search__product:hover,
+.sunrise-predictive-search__article:hover,
+.sunrise-predictive-search__page:hover {
+  background: rgba(var(--color-accent), 0.05);
+}
+
+.sunrise-predictive-search__product-image,
+.sunrise-predictive-search__article-image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--inputs-radius);
+  overflow: hidden;
+  background: rgba(var(--color-foreground), 0.05);
+  flex-shrink: 0;
+}
+
+.sunrise-predictive-search__product-img,
+.sunrise-predictive-search__article-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sunrise-predictive-search__product-content,
+.sunrise-predictive-search__article-content,
+.sunrise-predictive-search__page-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.sunrise-predictive-search__product-title,
+.sunrise-predictive-search__article-title,
+.sunrise-predictive-search__page-title {
+  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sunrise-predictive-search__product-price {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.sunrise-predictive-search__article-excerpt,
+.sunrise-predictive-search__page-excerpt {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.6);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sunrise-predictive-search__footer {
+  padding: 1.6rem 2rem;
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  text-align: center;
+}
+
+.sunrise-predictive-search__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.2rem 2.4rem;
+  background: rgb(var(--color-accent));
+  color: rgb(var(--color-button-text));
+  text-decoration: none;
+  border-radius: var(--inputs-radius);
+  font-size: 1.4rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.sunrise-predictive-search__view-all:hover {
+  background: rgba(var(--color-accent), 0.9);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-predictive-search {
+    max-width: 100%;
+  }
+
+  .sunrise-predictive-search__input {
+    padding: 1.4rem 1.6rem;
+    font-size: 1.4rem;
+  }
+
+  .sunrise-predictive-search__button {
+    padding: 1.4rem 1.6rem;
+  }
+
+  .sunrise-predictive-search__icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .sunrise-predictive-search__content {
+    padding: 1.6rem;
+  }
+
+  .sunrise-predictive-search__product,
+  .sunrise-predictive-search__article,
+  .sunrise-predictive-search__page {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .sunrise-predictive-search__product-image,
+  .sunrise-predictive-search__article-image {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .sunrise-predictive-search__product-title,
+  .sunrise-predictive-search__article-title,
+  .sunrise-predictive-search__page-title {
+    font-size: 1.3rem;
+  }
+
+  .sunrise-predictive-search__footer {
+    padding: 1.2rem 1.6rem;
+  }
+
+  .sunrise-predictive-search__view-all {
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-predictive-search__input {
+    padding: 1.2rem 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  .sunrise-predictive-search__button {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .sunrise-predictive-search__icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .sunrise-predictive-search__content {
+    padding: 1.2rem;
+  }
+
+  .sunrise-predictive-search__product-image,
+  .sunrise-predictive-search__article-image {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .sunrise-predictive-search__product-title,
+  .sunrise-predictive-search__article-title,
+  .sunrise-predictive-search__page-title {
+    font-size: 1.2rem;
+  }
+}

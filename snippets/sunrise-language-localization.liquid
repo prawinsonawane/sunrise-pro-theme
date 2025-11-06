@@ -1,0 +1,195 @@
+{%- liquid
+  assign position = localPosition | default: 'Header'
+  assign show_label = show_label | default: true
+  assign show_flag = show_flag | default: true
+  assign show_name = show_name | default: true
+  assign show_code = show_code | default: false
+  assign class = class | default: ''
+-%}
+
+<div class="sunrise-language-localization sunrise-language-localization--{{ position | downcase }}{% if class %} {{ class }}{% endif %}" data-localization="language">
+  {%- if show_label -%}
+    <label for="LanguageSelector-{{ position }}" class="sunrise-language-localization__label">
+      {{ 'localization.language_label' | t }}
+    </label>
+  {%- endif -%}
+  
+  <div class="sunrise-language-localization__selector">
+    <select 
+      id="LanguageSelector-{{ position }}" 
+      class="sunrise-language-localization__select"
+      name="language_code"
+      data-language-selector
+    >
+      {%- for language in localization.available_languages -%}
+        <option 
+          value="{{ language.iso_code }}"
+          {%- if language.iso_code == localization.language.iso_code -%} selected{%- endif -%}
+        >
+          {%- if show_flag -%}
+            <span class="sunrise-language-localization__flag">{{ language.iso_code | upcase }}</span>
+          {%- endif -%}
+          {%- if show_name -%}
+            <span class="sunrise-language-localization__name">{{ language.name }}</span>
+          {%- endif -%}
+          {%- if show_code -%}
+            <span class="sunrise-language-localization__code">({{ language.iso_code }})</span>
+          {%- endif -%}
+        </option>
+      {%- endfor -%}
+    </select>
+    
+    <div class="sunrise-language-localization__current">
+      {%- if show_flag -%}
+        <span class="sunrise-language-localization__flag">{{ localization.language.iso_code | upcase }}</span>
+      {%- endif -%}
+      {%- if show_name -%}
+        <span class="sunrise-language-localization__name">{{ localization.language.name }}</span>
+      {%- endif -%}
+      {%- if show_code -%}
+        <span class="sunrise-language-localization__code">({{ localization.language.iso_code }})</span>
+      {%- endif -%}
+      <svg class="sunrise-language-localization__chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="3,4.5 6,7.5 9,4.5"/>
+      </svg>
+    </div>
+  </div>
+  
+  <form class="sunrise-language-localization__form" method="post" action="/localization">
+    <input type="hidden" name="language_code" value="{{ localization.language.iso_code }}">
+    <input type="hidden" name="return_to" value="{{ request.path }}">
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const languageSelector = document.querySelector('#LanguageSelector-{{ position }}');
+    const languageForm = document.querySelector('.sunrise-language-localization__form');
+    const currentDisplay = document.querySelector('.sunrise-language-localization__current');
+    
+    if (languageSelector && languageForm) {
+      languageSelector.addEventListener('change', function() {
+        const selectedLanguage = this.value;
+        const formInput = languageForm.querySelector('input[name="language_code"]');
+        
+        if (formInput) {
+          formInput.value = selectedLanguage;
+          languageForm.submit();
+        }
+      });
+    }
+    
+    // Update current display when selector changes
+    if (languageSelector && currentDisplay) {
+      languageSelector.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const flag = selectedOption.querySelector('.sunrise-language-localization__flag');
+        const name = selectedOption.querySelector('.sunrise-language-localization__name');
+        const code = selectedOption.querySelector('.sunrise-language-localization__code');
+        
+        if (flag && currentDisplay.querySelector('.sunrise-language-localization__flag')) {
+          currentDisplay.querySelector('.sunrise-language-localization__flag').textContent = flag.textContent;
+        }
+        
+        if (name && currentDisplay.querySelector('.sunrise-language-localization__name')) {
+          currentDisplay.querySelector('.sunrise-language-localization__name').textContent = name.textContent;
+        }
+        
+        if (code && currentDisplay.querySelector('.sunrise-language-localization__code')) {
+          currentDisplay.querySelector('.sunrise-language-localization__code').textContent = code.textContent;
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .sunrise-language-localization {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .sunrise-language-localization__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-language-localization__selector {
+    position: relative;
+  }
+  
+  .sunrise-language-localization__select {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .sunrise-language-localization__current {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+  }
+  
+  .sunrise-language-localization__current:hover {
+    border-color: var(--color-primary);
+  }
+  
+  .sunrise-language-localization__flag {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+  
+  .sunrise-language-localization__name {
+    font-size: 0.875rem;
+    color: var(--color-text);
+  }
+  
+  .sunrise-language-localization__code {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-language-localization__chevron {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .sunrise-language-localization__selector:hover .sunrise-language-localization__chevron {
+    transform: rotate(180deg);
+  }
+  
+  .sunrise-language-localization__form {
+    display: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sunrise-language-localization__current {
+      padding: 0.625rem 0.875rem;
+      font-size: 0.875rem;
+    }
+    
+    .sunrise-language-localization__flag {
+      font-size: 0.75rem;
+    }
+    
+    .sunrise-language-localization__name {
+      font-size: 0.75rem;
+    }
+    
+    .sunrise-language-localization__code {
+      font-size: 0.625rem;
+    }
+  }
+</style>

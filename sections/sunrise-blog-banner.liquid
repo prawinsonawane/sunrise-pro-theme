@@ -1,0 +1,103 @@
+{{ 'sunrise-blog-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-blog-banner {
+    text-align: center;
+    padding: 3rem 0;
+    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-secondary) 100%);
+  }
+  
+  .sunrise-blog-banner__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .sunrise-blog-banner__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .sunrise-blog-banner__subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-blog-banner {
+      padding: 2rem 0;
+    }
+    
+    .sunrise-blog-banner__title {
+      font-size: 2rem;
+    }
+    
+    .sunrise-blog-banner__subtitle {
+      font-size: 1rem;
+    }
+    
+    .sunrise-blog-banner__container {
+      padding: 0 1rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-blog-banner">
+  <div class="sunrise-blog-banner__container">
+    <h1 class="sunrise-blog-banner__title">{{ blog.title }}</h1>
+    
+    {%- if blog.description != blank -%}
+      <p class="sunrise-blog-banner__subtitle">{{ blog.description }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Blog Banner Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show Blog Description",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ]
+}
+{% endschema %}

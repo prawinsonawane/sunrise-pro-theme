@@ -1,0 +1,228 @@
+{{ 'sunrise-article-header.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-article-header {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-background) 0%, var(--color-background-secondary) 100%);
+  }
+  
+  .sunrise-article-header--has-image {
+    background: none;
+  }
+  
+  .sunrise-article-header__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .sunrise-article-header__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+  }
+  
+  .sunrise-article-header__content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: var(--color-text);
+    max-width: 800px;
+    padding: 0 2rem;
+  }
+  
+  .sunrise-article-header--has-image .sunrise-article-header__content {
+    color: white;
+  }
+  
+  .sunrise-article-header__title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .sunrise-article-header__meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
+  
+  .sunrise-article-header__date {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-article-header__author {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-article-header__excerpt {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-article-header {
+      min-height: 300px;
+    }
+    
+    .sunrise-article-header__title {
+      font-size: 2rem;
+    }
+    
+    .sunrise-article-header__excerpt {
+      font-size: 1rem;
+    }
+    
+    .sunrise-article-header__content {
+      padding: 0 1rem;
+    }
+    
+    .sunrise-article-header__meta {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-article-header{% if article.image %} sunrise-article-header--has-image{% endif %}">
+  {%- if article.image -%}
+    {{
+      article.image
+      | image_url: width: 1920
+      | image_tag:
+        class: 'sunrise-article-header__image',
+        loading: 'eager',
+        alt: article.title | escape
+    }}
+    <div class="sunrise-article-header__overlay"></div>
+  {%- endif -%}
+  
+  <div class="sunrise-article-header__content">
+    <h1 class="sunrise-article-header__title">{{ article.title }}</h1>
+    
+    <div class="sunrise-article-header__meta">
+      <div class="sunrise-article-header__date">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        {{ article.published_at | date: '%B %d, %Y' }}
+      </div>
+      
+      {%- if article.author -%}
+        <div class="sunrise-article-header__author">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          {{ article.author }}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    {%- if article.excerpt != blank -%}
+      <div class="sunrise-article-header__excerpt">
+        {{ article.excerpt }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Article Header",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Article Header Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show Featured Image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "Show Excerpt",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "header_height",
+      "label": "Header Height",
+      "min": 300,
+      "max": 600,
+      "step": 50,
+      "default": 400,
+      "unit": "px"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

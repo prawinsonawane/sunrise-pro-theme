@@ -1,0 +1,165 @@
+/* Sunrise Pro - Hero Section */
+
+.sunrise-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  overflow: hidden;
+}
+
+.sunrise-hero__media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.sunrise-hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sunrise-hero__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(var(--color-shadow), 0.3) 0%, rgba(var(--color-shadow), 0.1) 100%);
+  z-index: 2;
+}
+
+.sunrise-hero__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 80rem;
+  text-align: center;
+}
+
+.sunrise-hero__text {
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-hero__text--left {
+  text-align: left;
+}
+
+.sunrise-hero__text--center {
+  text-align: center;
+}
+
+.sunrise-hero__text--right {
+  text-align: right;
+}
+
+.sunrise-hero__heading {
+  margin-bottom: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-hero__heading--h0 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-hero__heading--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-hero__heading--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-hero__description {
+  margin-bottom: 3.2rem;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.9);
+  max-width: 60rem;
+}
+
+.sunrise-hero__text--center .sunrise-hero__description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sunrise-hero__buttons {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sunrise-hero__text--left .sunrise-hero__buttons {
+  justify-content: flex-start;
+}
+
+.sunrise-hero__text--right .sunrise-hero__buttons {
+  justify-content: flex-end;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-hero {
+    min-height: 60vh;
+    padding: 2rem 0;
+  }
+
+  .sunrise-hero__heading--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__heading--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__heading--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__description {
+    font-size: 1.6rem;
+    margin-bottom: 2.4rem;
+  }
+
+  .sunrise-hero__buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sunrise-hero__text--left .sunrise-hero__buttons,
+  .sunrise-hero__text--right .sunrise-hero__buttons {
+    align-items: center;
+  }
+
+  .sunrise-hero__buttons .sunrise-button {
+    width: 100%;
+    max-width: 30rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-hero__heading--h0 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__heading--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__heading--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-hero__description {
+    font-size: 1.4rem;
+  }
+}

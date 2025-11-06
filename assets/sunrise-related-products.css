@@ -1,0 +1,134 @@
+/* Sunrise Pro - Related Products Section */
+
+.sunrise-related-products {
+  padding: var(--spacing-sections-desktop) 0;
+}
+
+.sunrise-related-products__container {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.sunrise-related-products__header {
+  margin-bottom: 4rem;
+}
+
+.sunrise-related-products__title {
+  margin-bottom: 1.6rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.sunrise-related-products__title--h0 {
+  font-size: calc(4.8rem * var(--font-heading-scale));
+}
+
+.sunrise-related-products__title--h1 {
+  font-size: calc(4.0rem * var(--font-heading-scale));
+}
+
+.sunrise-related-products__title--h2 {
+  font-size: calc(3.2rem * var(--font-heading-scale));
+}
+
+.sunrise-related-products__description {
+  max-width: 60rem;
+  margin: 0 auto;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.sunrise-related-products__grid {
+  margin-bottom: 4rem;
+}
+
+.sunrise-related-products__item {
+  height: 100%;
+}
+
+.sunrise-related-products__footer {
+  margin-top: 3.2rem;
+}
+
+.sunrise-related-products__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30rem;
+  background: rgba(var(--color-foreground), 0.05);
+  border-radius: var(--product-card-corner-radius);
+}
+
+.sunrise-related-products__empty-content {
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.sunrise-related-products__empty-icon {
+  margin-bottom: 1.6rem;
+  opacity: 0.5;
+}
+
+.sunrise-related-products__empty h3 {
+  margin-bottom: 0.8rem;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.sunrise-related-products__empty p {
+  font-size: 1.4rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 749px) {
+  .sunrise-related-products {
+    padding: var(--spacing-sections-mobile) 0;
+  }
+
+  .sunrise-related-products__header {
+    margin-bottom: 3rem;
+  }
+
+  .sunrise-related-products__title--h0 {
+    font-size: calc(3.2rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__title--h1 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__title--h2 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__description {
+    font-size: 1.6rem;
+  }
+
+  .sunrise-related-products__grid {
+    margin-bottom: 3rem;
+  }
+
+  .sunrise-related-products__footer {
+    margin-top: 2.4rem;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .sunrise-related-products__title--h0 {
+    font-size: calc(2.8rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__title--h1 {
+    font-size: calc(2.4rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__title--h2 {
+    font-size: calc(2.0rem * var(--font-heading-scale));
+  }
+
+  .sunrise-related-products__description {
+    font-size: 1.4rem;
+  }
+}

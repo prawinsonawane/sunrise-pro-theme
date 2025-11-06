@@ -1,0 +1,330 @@
+{{ 'sunrise-image-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-image-banner {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-image-banner {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .sunrise-image-banner__media {
+    height: {{ section.settings.desktop_height }}vh;
+  }
+
+  @media screen and (max-width: 749px) {
+    .sunrise-image-banner__media {
+      height: {{ section.settings.mobile_height }}vh;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-image-banner color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="sunrise-image-banner__container{% if section.settings.full_width %} sunrise-image-banner__container--full-width{% endif %}">
+    <div class="sunrise-image-banner__media">
+      {%- if section.settings.image != blank -%}
+        <div class="sunrise-image-banner__image-wrapper">
+          {%- assign image_height = section.settings.image.width | divided_by: section.settings.image.aspect_ratio -%}
+          {{
+            section.settings.image
+            | image_url: width: 1920
+            | image_tag:
+              class: 'sunrise-image-banner__image',
+              loading: 'eager',
+              widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+              height: image_height,
+              width: section.settings.image.width,
+              alt: section.settings.image.alt | escape
+          }}
+          {%- if section.settings.image_overlay_opacity > 0 -%}
+            <div class="sunrise-image-banner__overlay" style="opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};"></div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="sunrise-image-banner__placeholder">
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'sunrise-image-banner__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+
+      <div class="sunrise-image-banner__content sunrise-image-banner__content--{{ section.settings.desktop_content_position }}">
+        <div class="sunrise-image-banner__text sunrise-image-banner__text--{{ section.settings.desktop_content_alignment }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'heading' -%}
+                <h2 class="sunrise-image-banner__heading sunrise-image-banner__heading--{{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  {{ block.settings.heading | escape }}
+                </h2>
+              {%- when 'text' -%}
+                <div class="sunrise-image-banner__description sunrise-rte" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+              {%- when 'button' -%}
+                <div class="sunrise-image-banner__buttons" {{ block.shopify_attributes }}>
+                  {%- if block.settings.button_label_1 != blank -%}
+                    <a href="{{ block.settings.button_link_1 }}" class="sunrise-button{% if block.settings.button_style_secondary_1 %} sunrise-button--secondary{% endif %}">
+                      {{ block.settings.button_label_1 | escape }}
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.button_label_2 != blank -%}
+                    <a href="{{ block.settings.button_link_2 }}" class="sunrise-button{% if block.settings.button_style_secondary_2 %} sunrise-button--secondary{% endif %}">
+                      {{ block.settings.button_label_2 | escape }}
+                    </a>
+                  {%- endif -%}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image banner",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Image banner",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "Small"
+            },
+            {
+              "value": "h1",
+              "label": "Medium"
+            },
+            {
+              "value": "h0",
+              "label": "Large"
+            }
+          ],
+          "default": "h1",
+          "label": "Heading size"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Give customers details about the banner image(s) or content on the template.</p>",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "default": "Button label",
+          "label": "First button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "First button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_1",
+          "default": false,
+          "label": "Use secondary button style"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Second button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Second button link"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_style_secondary_2",
+          "default": true,
+          "label": "Use secondary button style"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "middle-center",
+      "label": "Desktop content position"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Desktop content alignment"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Desktop height",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Mobile height",
+      "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Make banner full width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image banner",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

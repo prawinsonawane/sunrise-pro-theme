@@ -1,0 +1,424 @@
+{{ 'sunrise-page-builder.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-page-builder {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-page-builder {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-page-builder color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="page-width sunrise-page-builder__container">
+    
+    {%- comment -%} Page Builder Header {%- endcomment -%}
+    {%- if section.settings.show_page_header -%}
+      <div class="sunrise-page-builder__header sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        {%- if section.settings.page_title != blank -%}
+          <h1 class="sunrise-page-builder__title sunrise-page-builder__title--{{ section.settings.title_size }}">
+            {{ section.settings.page_title | escape }}
+          </h1>
+        {%- endif -%}
+        
+        {%- if section.settings.page_subtitle != blank -%}
+          <div class="sunrise-page-builder__subtitle sunrise-rte">
+            {{ section.settings.page_subtitle }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Page Builder Content Blocks {%- endcomment -%}
+    <div class="sunrise-page-builder__content">
+      {%- for block in section.blocks -%}
+        <div class="sunrise-page-builder__block sunrise-page-builder__block--{{ block.type }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+          
+          {%- case block.type -%}
+            
+            {%- when 'text_block' -%}
+              <div class="sunrise-page-builder__text-block sunrise-card">
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="sunrise-page-builder__block-heading">{{ block.settings.heading | escape }}</h2>
+                {%- endif -%}
+                <div class="sunrise-page-builder__block-content sunrise-rte">
+                  {{ block.settings.text }}
+                </div>
+              </div>
+
+            {%- when 'image_block' -%}
+              <div class="sunrise-page-builder__image-block sunrise-card">
+                {%- if block.settings.image != blank -%}
+                  <div class="sunrise-page-builder__image-wrapper">
+                    {%- assign image_height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 1200
+                      | image_tag:
+                        class: 'sunrise-page-builder__image',
+                        loading: 'lazy',
+                        widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+                        height: image_height,
+                        width: block.settings.image.width,
+                        alt: block.settings.image.alt | escape
+                    }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.caption != blank -%}
+                  <div class="sunrise-page-builder__image-caption sunrise-rte">
+                    {{ block.settings.caption }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'image_text_block' -%}
+              <div class="sunrise-page-builder__image-text-block sunrise-card">
+                <div class="sunrise-page-builder__image-text-grid sunrise-grid sunrise-grid--2-col-desktop sunrise-grid--1-col-mobile">
+                  <div class="sunrise-page-builder__image-text-image sunrise-grid__item">
+                    {%- if block.settings.image != blank -%}
+                      <div class="sunrise-page-builder__image-wrapper">
+                        {%- assign image_height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio -%}
+                        {{
+                          block.settings.image
+                          | image_url: width: 800
+                          | image_tag:
+                            class: 'sunrise-page-builder__image',
+                            loading: 'lazy',
+                            widths: '375, 550, 750, 1100, 1500',
+                            height: image_height,
+                            width: block.settings.image.width,
+                            alt: block.settings.image.alt | escape
+                        }}
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <div class="sunrise-page-builder__image-text-content sunrise-grid__item">
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="sunrise-page-builder__block-heading">{{ block.settings.heading | escape }}</h2>
+                    {%- endif -%}
+                    <div class="sunrise-page-builder__block-content sunrise-rte">
+                      {{ block.settings.text }}
+                    </div>
+                    {%- if block.settings.button_text != blank and block.settings.button_link != blank -%}
+                      <div class="sunrise-page-builder__button">
+                        <a href="{{ block.settings.button_link }}" class="sunrise-button{% if block.settings.button_style == 'secondary' %} sunrise-button--secondary{% endif %}">
+                          {{ block.settings.button_text | escape }}
+                        </a>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+
+            {%- when 'video_block' -%}
+              <div class="sunrise-page-builder__video-block sunrise-card">
+                {%- if block.settings.video_url != blank -%}
+                  <div class="sunrise-page-builder__video-wrapper">
+                    <iframe 
+                      class="sunrise-page-builder__video"
+                      src="{{ block.settings.video_url }}"
+                      frameborder="0"
+                      allowfullscreen
+                      loading="lazy">
+                    </iframe>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.caption != blank -%}
+                  <div class="sunrise-page-builder__video-caption sunrise-rte">
+                    {{ block.settings.caption }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'cta_block' -%}
+              <div class="sunrise-page-builder__cta-block sunrise-card sunrise-text-center">
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="sunrise-page-builder__cta-heading">{{ block.settings.heading | escape }}</h2>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="sunrise-page-builder__cta-text sunrise-rte">
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.button_text != blank and block.settings.button_link != blank -%}
+                  <div class="sunrise-page-builder__cta-button">
+                    <a href="{{ block.settings.button_link }}" class="sunrise-button sunrise-button--large{% if block.settings.button_style == 'secondary' %} sunrise-button--secondary{% endif %}">
+                      {{ block.settings.button_text | escape }}
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'spacer_block' -%}
+              <div class="sunrise-page-builder__spacer" style="height: {{ block.settings.spacer_height }}px;"></div>
+
+            {%- when 'divider_block' -%}
+              <div class="sunrise-page-builder__divider sunrise-text-center">
+                <hr class="sunrise-page-builder__divider-line">
+              </div>
+
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page builder",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_page_header",
+      "default": true,
+      "label": "Show page header"
+    },
+    {
+      "type": "text",
+      "id": "page_title",
+      "label": "Page title"
+    },
+    {
+      "type": "select",
+      "id": "title_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Title size"
+    },
+    {
+      "type": "richtext",
+      "id": "page_subtitle",
+      "label": "Page subtitle"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Image block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "image_text_block",
+      "name": "Image with text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            }
+          ],
+          "default": "primary",
+          "label": "Button style"
+        }
+      ]
+    },
+    {
+      "type": "video_block",
+      "name": "Video block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "YouTube, Vimeo, or other embeddable video URL"
+        },
+        {
+          "type": "richtext",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    },
+    {
+      "type": "cta_block",
+      "name": "Call to action",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "Primary"
+            },
+            {
+              "value": "secondary",
+              "label": "Secondary"
+            }
+          ],
+          "default": "primary",
+          "label": "Button style"
+        }
+      ]
+    },
+    {
+      "type": "spacer_block",
+      "name": "Spacer",
+      "settings": [
+        {
+          "type": "range",
+          "id": "spacer_height",
+          "min": 20,
+          "max": 200,
+          "step": 10,
+          "unit": "px",
+          "label": "Spacer height",
+          "default": 40
+        }
+      ]
+    },
+    {
+      "type": "divider_block",
+      "name": "Divider",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page builder",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "image_text_block"
+        },
+        {
+          "type": "cta_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

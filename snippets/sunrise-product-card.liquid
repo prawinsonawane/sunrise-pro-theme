@@ -1,0 +1,120 @@
+{%- liquid
+  assign lazy_load = lazy_load | default: true
+  assign show_vendor = show_vendor | default: false
+  assign show_rating = show_rating | default: false
+-%}
+
+<div class="sunrise-product-card sunrise-card">
+  <div class="sunrise-product-card__media">
+    {%- if product.featured_media -%}
+      <a href="{{ product.url }}" class="sunrise-product-card__link">
+        <div class="sunrise-product-card__image-wrapper">
+          {%- assign image_height = product.featured_media.width | divided_by: product.featured_media.aspect_ratio -%}
+          {%- assign image_height = image_height -%}
+          {%- if lazy_load -%}
+            {{
+              product.featured_media
+              | image_url: width: 600
+              | image_tag:
+                class: 'sunrise-product-card__image',
+                loading: 'lazy',
+                widths: '165, 360, 533, 720, 940, 1066, 1280',
+                height: image_height,
+                width: product.featured_media.width,
+                alt: product.featured_media.alt | escape
+            }}
+          {%- else -%}
+            {{
+              product.featured_media
+              | image_url: width: 600
+              | image_tag:
+                class: 'sunrise-product-card__image',
+                loading: 'eager',
+                widths: '165, 360, 533, 720, 940, 1066, 1280',
+                height: image_height,
+                width: product.featured_media.width,
+                alt: product.featured_media.alt | escape
+            }}
+          {%- endif -%}
+        </div>
+      </a>
+    {%- else -%}
+      <a href="{{ product.url }}" class="sunrise-product-card__link">
+        <div class="sunrise-product-card__image-wrapper">
+          {{ 'product-1' | placeholder_svg_tag: 'sunrise-product-card__placeholder' }}
+        </div>
+      </a>
+    {%- endif -%}
+
+    {%- if product.compare_at_price > product.price -%}
+      <div class="sunrise-product-card__badge sunrise-product-card__badge--sale">
+        Sale
+      </div>
+    {%- endif -%}
+
+    {%- unless product.available -%}
+      <div class="sunrise-product-card__badge sunrise-product-card__badge--sold-out">
+        Sold out
+      </div>
+    {%- endunless -%}
+  </div>
+
+  <div class="sunrise-product-card__content">
+    {%- if show_vendor and product.vendor != blank -%}
+      <div class="sunrise-product-card__vendor">
+        {{ product.vendor | escape }}
+      </div>
+    {%- endif -%}
+
+    <h3 class="sunrise-product-card__title">
+      <a href="{{ product.url }}" class="sunrise-product-card__title-link">
+        {{ product.title | escape }}
+      </a>
+    </h3>
+
+    {%- if show_rating and product.metafields.reviews.rating.value != blank -%}
+      <div class="sunrise-product-card__rating">
+        <div class="sunrise-rating">
+          <div class="sunrise-rating__stars">
+            {%- for i in (1..5) -%}
+              <svg class="sunrise-rating__star{% if i <= product.metafields.reviews.rating.value %} sunrise-rating__star--active{% endif %}" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- endfor -%}
+          </div>
+          <span class="sunrise-rating__text">
+            {{ product.metafields.reviews.rating.value }} ({{ product.metafields.reviews.rating_count.value }})
+          </span>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="sunrise-product-card__price sunrise-price">
+      <div class="sunrise-price__container">
+        <span class="sunrise-price-item sunrise-price-item--regular">
+          {{ product.price | money }}
+        </span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class="sunrise-price-item sunrise-price-item--sale">
+            {{ product.compare_at_price | money }}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="sunrise-product-card__actions">
+      {%- if product.available -%}
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="sunrise-product-card__form">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="sunrise-product-card__add-to-cart sunrise-button sunrise-button--small sunrise-button--full-width" name="add">
+            Add to cart
+          </button>
+        </form>
+      {%- else -%}
+        <button class="sunrise-product-card__add-to-cart sunrise-button sunrise-button--small sunrise-button--full-width" disabled>
+          Sold out
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

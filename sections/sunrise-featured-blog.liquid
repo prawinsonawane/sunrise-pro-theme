@@ -1,0 +1,329 @@
+{{ 'sunrise-featured-blog.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign blog = blogs[section.settings.blog]
+  assign articles = blog.articles
+  if section.settings.articles_to_show > 0
+    assign articles = articles | slice: 0, section.settings.articles_to_show
+  endif
+-%}
+
+{%- style -%}
+  .sunrise-featured-blog {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-featured-blog {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-featured-blog color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="page-width sunrise-featured-blog__container">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <div class="sunrise-featured-blog__header sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" {{ block.shopify_attributes }}>
+            <h2 class="sunrise-featured-blog__title sunrise-featured-blog__title--{{ block.settings.heading_size }}">
+              {{ block.settings.heading | escape }}
+            </h2>
+          </div>
+        {%- when 'description' -%}
+          <div class="sunrise-featured-blog__description sunrise-rte sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- if blog != blank and articles.size > 0 -%}
+      <div class="sunrise-featured-blog__grid sunrise-grid sunrise-grid--{{ section.settings.columns_desktop }}-col-desktop sunrise-grid--{{ section.settings.columns_mobile }}-col-mobile">
+        {%- for article in articles -%}
+          <div class="sunrise-featured-blog__item sunrise-grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            <article class="sunrise-featured-blog__article sunrise-card">
+              {%- if article.image != blank and section.settings.show_image -%}
+                <div class="sunrise-featured-blog__image-wrapper">
+                  <a href="{{ article.url }}" class="sunrise-featured-blog__image-link">
+                    {%- assign image_height = article.image.width | divided_by: article.image.aspect_ratio -%}
+                    {{
+                      article.image
+                      | image_url: width: 600
+                      | image_tag:
+                        class: 'sunrise-featured-blog__image',
+                        loading: 'lazy',
+                        widths: '165, 360, 533, 720, 940, 1066, 1280',
+                        height: image_height,
+                        width: article.image.width,
+                        alt: article.image.alt | escape
+                    }}
+                  </a>
+                </div>
+              {%- endif -%}
+
+              <div class="sunrise-featured-blog__content">
+                {%- if section.settings.show_date or section.settings.show_author -%}
+                  <div class="sunrise-featured-blog__meta">
+                    {%- if section.settings.show_date -%}
+                      <time class="sunrise-featured-blog__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                        {{ article.published_at | date: '%B %d, %Y' }}
+                      </time>
+                    {%- endif -%}
+                    {%- if section.settings.show_author and section.settings.show_date -%}
+                      <span class="sunrise-featured-blog__separator">•</span>
+                    {%- endif -%}
+                    {%- if section.settings.show_author -%}
+                      <span class="sunrise-featured-blog__author">
+                        {{ 'sections.blog.by_author' | t: author: article.author }}
+                      </span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                <h3 class="sunrise-featured-blog__article-title">
+                  <a href="{{ article.url }}" class="sunrise-featured-blog__title-link">
+                    {{ article.title | escape }}
+                  </a>
+                </h3>
+
+                {%- if section.settings.show_excerpt and article.excerpt != blank -%}
+                  <div class="sunrise-featured-blog__excerpt sunrise-rte">
+                    {{ article.excerpt | truncate: 150 }}
+                  </div>
+                {%- endif -%}
+
+                {%- if section.settings.show_read_more -%}
+                  <div class="sunrise-featured-blog__read-more">
+                    <a href="{{ article.url }}" class="sunrise-featured-blog__read-more-link">
+                      {{ 'sections.blog.read_more' | t }}
+                      <svg class="sunrise-featured-blog__read-more-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 3l5 5-5 5"/>
+                      </svg>
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
+            </article>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_view_all and section.settings.view_all_text != blank -%}
+        <div class="sunrise-featured-blog__footer sunrise-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <a href="{{ blog.url }}" class="sunrise-button{% if section.settings.view_all_style == 'secondary' %} sunrise-button--secondary{% endif %}">
+            {{ section.settings.view_all_text | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      <div class="sunrise-featured-blog__empty sunrise-text-center">
+        <div class="sunrise-featured-blog__empty-content">
+          <svg class="sunrise-featured-blog__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10,9 9,9 8,9"/>
+          </svg>
+          <h3>No blog selected</h3>
+          <p>Please select a blog to display articles here.</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured blog",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "From our blog",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "options": [
+            {
+              "value": "h2",
+              "label": "Small"
+            },
+            {
+              "value": "h1",
+              "label": "Medium"
+            },
+            {
+              "value": "h0",
+              "label": "Large"
+            }
+          ],
+          "default": "h1",
+          "label": "Heading size"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "range",
+      "id": "articles_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3,
+      "label": "Maximum articles to show"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "1",
+      "label": "Number of columns on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "Show article image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show article date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show article author"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "default": true,
+      "label": "Show article excerpt"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_read_more",
+      "default": true,
+      "label": "Show read more link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "default": true,
+      "label": "Show 'View all' button"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "default": "View all articles",
+      "label": "Button text"
+    },
+    {
+      "type": "select",
+      "id": "view_all_style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        }
+      ],
+      "default": "primary",
+      "label": "Button style"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured blog",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "description"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

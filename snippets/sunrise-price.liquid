@@ -1,0 +1,50 @@
+{%- liquid
+  assign money_price = price | money
+  assign money_compare_at_price = compare_at_price | money
+  
+  if settings.currency_code_enabled
+    assign money_price = price | money_with_currency
+    assign money_compare_at_price = compare_at_price | money_with_currency
+  endif
+-%}
+
+<div class="sunrise-price{% if class %} {{ class }}{% endif %}">
+  {%- if compare_at_price > price -%}
+    <div class="sunrise-price__sale">
+      <span class="sunrise-price__regular sunrise-price__regular--sale">
+        {{ money_price }}
+      </span>
+      <span class="sunrise-price__compare">
+        {{ money_compare_at_price }}
+      </span>
+    </div>
+    <div class="sunrise-price__badge sunrise-price__badge--sale">
+      {{ 'products.product.on_sale' | t }}
+    </div>
+  {%- else -%}
+    <div class="sunrise-price__regular">
+      {{ money_price }}
+    </div>
+  {%- endif -%}
+  
+  {%- if unit_price -%}
+    <div class="sunrise-price__unit">
+      {%- liquid
+        assign unit_price_measurement = unit_price_measurement
+        if unit_price_measurement.reference_value != 1
+          assign unit_price_measurement = unit_price_measurement | default: product.selected_or_first_available_variant.unit_price_measurement
+        endif
+      -%}
+      <span class="sunrise-price__unit-price">
+        {{ unit_price | money }}
+      </span>
+      <span class="sunrise-price__unit-separator">/</span>
+      <span class="sunrise-price__unit-measurement">
+        {%- if unit_price_measurement.reference_unit != unit_price_measurement.unit -%}
+          {{ unit_price_measurement.reference_unit }}
+        {%- endif -%}
+        {{ unit_price_measurement.unit }}
+      </span>
+    </div>
+  {%- endif -%}
+</div>

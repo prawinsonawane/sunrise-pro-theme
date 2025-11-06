@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "sunrise_blog_banner": {
+      "type": "sunrise-blog-banner",
+      "settings": {
+        "show_blog_title": true,
+        "show_blog_description": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "sunrise_blog_posts": {
+      "type": "sunrise-blog-posts",
+      "settings": {
+        "posts_per_page": 6,
+        "columns_desktop": 3,
+        "columns_mobile": "1",
+        "show_image": true,
+        "show_date": true,
+        "show_excerpt": true,
+        "show_read_more": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "sunrise_blog_banner",
+    "sunrise_blog_posts"
+  ]
+}

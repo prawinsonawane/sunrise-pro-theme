@@ -1,0 +1,227 @@
+{{ 'sunrise-contact-form.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-contact-form {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .sunrise-contact-form {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-contact-form color-{{ section.settings.color_scheme }} sunrise-gradient">
+  <div class="page-width sunrise-contact-form__container">
+    <div class="sunrise-contact-form__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- if section.settings.heading != blank -%}
+        <div class="sunrise-contact-form__header sunrise-text-center">
+          <h2 class="sunrise-contact-form__heading sunrise-contact-form__heading--{{ section.settings.heading_size }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+          {%- if section.settings.text != blank -%}
+            <div class="sunrise-contact-form__description sunrise-rte">
+              {{ section.settings.text }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="sunrise-contact-form__form-wrapper">
+        {%- liquid
+          assign form_id = 'ContactForm-' | append: section.id
+        -%}
+        {%- form 'contact', class: 'sunrise-contact-form__form', id: form_id -%}
+          <div class="sunrise-contact-form__fields">
+            <div class="sunrise-contact-form__field sunrise-contact-form__field--half">
+              <label for="ContactForm-name-{{ section.id }}" class="sunrise-contact-form__label">
+                {{ 'templates.contact.form.name' | t }}
+              </label>
+              <input
+                type="text"
+                id="ContactForm-name-{{ section.id }}"
+                name="contact[name]"
+                class="sunrise-contact-form__input"
+                value="{{ form.name }}"
+                autocomplete="name"
+                required
+              >
+            </div>
+
+            <div class="sunrise-contact-form__field sunrise-contact-form__field--half">
+              <label for="ContactForm-email-{{ section.id }}" class="sunrise-contact-form__label">
+                {{ 'templates.contact.form.email' | t }}
+                <span class="sunrise-contact-form__required">*</span>
+              </label>
+              <input
+                type="email"
+                id="ContactForm-email-{{ section.id }}"
+                name="contact[email]"
+                class="sunrise-contact-form__input"
+                value="{{ form.email }}"
+                autocomplete="email"
+                required
+              >
+            </div>
+
+            <div class="sunrise-contact-form__field sunrise-contact-form__field--half">
+              <label for="ContactForm-phone-{{ section.id }}" class="sunrise-contact-form__label">
+                {{ 'templates.contact.form.phone' | t }}
+              </label>
+              <input
+                type="tel"
+                id="ContactForm-phone-{{ section.id }}"
+                name="contact[phone]"
+                class="sunrise-contact-form__input"
+                value="{{ form.phone }}"
+                autocomplete="tel"
+              >
+            </div>
+
+            <div class="sunrise-contact-form__field sunrise-contact-form__field--half">
+              <label for="ContactForm-subject-{{ section.id }}" class="sunrise-contact-form__label">
+                {{ 'templates.contact.form.subject' | t }}
+              </label>
+              <input
+                type="text"
+                id="ContactForm-subject-{{ section.id }}"
+                name="contact[subject]"
+                class="sunrise-contact-form__input"
+                value="{{ form.subject }}"
+              >
+            </div>
+
+            <div class="sunrise-contact-form__field sunrise-contact-form__field--full">
+              <label for="ContactForm-body-{{ section.id }}" class="sunrise-contact-form__label">
+                {{ 'templates.contact.form.message' | t }}
+                <span class="sunrise-contact-form__required">*</span>
+              </label>
+              <textarea
+                id="ContactForm-body-{{ section.id }}"
+                name="contact[body]"
+                class="sunrise-contact-form__textarea"
+                rows="6"
+                required
+              >{{ form.body }}</textarea>
+            </div>
+          </div>
+
+          <div class="sunrise-contact-form__button sunrise-text-center">
+            <button type="submit" class="sunrise-button sunrise-button--full-width">
+              {{ 'templates.contact.form.send' | t }}
+            </button>
+          </div>
+
+          {%- if form.posted_successfully? -%}
+            <div class="sunrise-contact-form__message sunrise-contact-form__message--success" tabindex="-1" autofocus>
+              <svg class="sunrise-contact-form__success-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16.5 6.5L8 15l-4.5-4.5"/>
+              </svg>
+              {{ 'templates.contact.form.post_success' | t }}
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="sunrise-contact-form__message sunrise-contact-form__message--error" tabindex="-1" autofocus>
+              <svg class="sunrise-contact-form__error-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="10" cy="10" r="8"/>
+                <path d="M8 8l4 4 4-4"/>
+              </svg>
+              {{ 'templates.contact.form.error_heading' | t }}
+              <ul class="sunrise-contact-form__error-list">
+                {%- for field in form.errors -%}
+                  <li>
+                    {%- if field == 'form' -%}
+                      {{ form.errors.messages[field] }}
+                    {%- else -%}
+                      <a href="#ContactForm-{{ field }}-{{ section.id }}" class="sunrise-contact-form__error-link">
+                        {{ form.errors.translated_fields[field] | capitalize }}
+                        {{ form.errors.messages[field] }}
+                      </a>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Contact us",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>Get in touch with us for any questions or support.</p>",
+      "label": "Text"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form"
+    }
+  ]
+}
+{% endschema %}

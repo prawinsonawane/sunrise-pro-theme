@@ -1,0 +1,51 @@
+{
+  "current": {
+    "theme_name": "Sunrise Pro",
+    "theme_version": "1.0.0",
+    "logo_width": 120,
+    "brand_tagline": "Premium Quality, Exceptional Service",
+    "type_header_font": "inter_n4",
+    "heading_scale": 110,
+    "type_body_font": "inter_n4",
+    "body_scale": 100,
+    "page_width": 1200,
+    "spacing_sections": 20,
+    "spacing_grid_horizontal": 12,
+    "spacing_grid_vertical": 12,
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "lift",
+    "enable_parallax": false,
+    "buttons_radius": 8,
+    "buttons_border_thickness": 0,
+    "buttons_shadow_opacity": 20,
+    "inputs_radius": 8,
+    "inputs_border_thickness": 1,
+    "card_style": "modern",
+    "card_image_padding": 8,
+    "card_text_alignment": "left",
+    "card_corner_radius": 12,
+    "card_shadow_opacity": 15,
+    "predictive_search_enabled": true,
+    "predictive_search_show_vendor": true,
+    "predictive_search_show_price": true,
+    "cart_type": "drawer",
+    "show_vendor": false,
+    "show_cart_note": true,
+    "lazy_load_images": true,
+    "preload_critical_css": true,
+    "image_quality": 85,
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FFFFFF",
+          "text": "#1A1A1A",
+          "accent": "#FF6B35",
+          "button": "#FF6B35",
+          "button_label": "#FFFFFF",
+          "secondary_button_label": "#FF6B35",
+          "shadow": "#000000"
+        }
+      }
+    }
+  }
+}

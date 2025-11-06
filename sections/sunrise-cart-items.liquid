@@ -1,0 +1,316 @@
+{{ 'sunrise-cart-items.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-cart-items {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-cart-items__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .sunrise-cart-items__header {
+    margin-bottom: 2rem;
+  }
+  
+  .sunrise-cart-items__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-cart-items__count {
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-cart-items__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sunrise-cart-items__item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    align-items: center;
+  }
+  
+  .sunrise-cart-items__image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
+  
+  .sunrise-cart-items__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .sunrise-cart-items__name {
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  
+  .sunrise-cart-items__name:hover {
+    color: var(--color-primary);
+  }
+  
+  .sunrise-cart-items__variant {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-cart-items__quantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .sunrise-cart-items__quantity-input {
+    width: 60px;
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    text-align: center;
+  }
+  
+  .sunrise-cart-items__quantity-button {
+    padding: 0.5rem;
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-cart-items__quantity-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+  
+  .sunrise-cart-items__price {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: right;
+  }
+  
+  .sunrise-cart-items__remove {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: color 0.3s ease;
+  }
+  
+  .sunrise-cart-items__remove:hover {
+    color: var(--color-primary);
+  }
+  
+  .sunrise-cart-items__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+  
+  .sunrise-cart-items__empty-icon {
+    width: 4rem;
+    height: 4rem;
+    margin: 0 auto 1rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-cart-items__empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+  
+  .sunrise-cart-items__empty-description {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+  
+  .sunrise-cart-items__empty-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--color-primary);
+    color: var(--color-primary-contrast);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sunrise-cart-items__empty-button:hover {
+    background-color: var(--color-primary-dark);
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-cart-items__item {
+      grid-template-columns: 80px 1fr;
+      gap: 0.5rem;
+    }
+    
+    .sunrise-cart-items__image {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .sunrise-cart-items__quantity,
+    .sunrise-cart-items__price {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+    
+    .sunrise-cart-items__price {
+      justify-self: end;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-cart-items">
+  <div class="sunrise-cart-items__container">
+    <div class="sunrise-cart-items__header">
+      <h1 class="sunrise-cart-items__title">{{ 'sections.cart.title' | t }}</h1>
+      <div class="sunrise-cart-items__count">
+        {{ cart.item_count }} {{ 'sections.cart.items_count' | t: count: cart.item_count }}
+      </div>
+    </div>
+    
+    {%- if cart.items.size > 0 -%}
+      <div class="sunrise-cart-items__list">
+        {%- for item in cart.items -%}
+          <div class="sunrise-cart-items__item">
+            <img
+              src="{{ item.image | image_url: width: 200 }}"
+              alt="{{ item.image.alt | escape }}"
+              class="sunrise-cart-items__image"
+              loading="lazy"
+            >
+            
+            <div class="sunrise-cart-items__details">
+              <a href="{{ item.url }}" class="sunrise-cart-items__name">
+                {{ item.product.title }}
+              </a>
+              
+              {%- if item.variant.title != 'Default Title' -%}
+                <div class="sunrise-cart-items__variant">{{ item.variant.title }}</div>
+              {%- endif -%}
+            </div>
+            
+            <div class="sunrise-cart-items__quantity">
+              <button class="sunrise-cart-items__quantity-button" onclick="changeQuantity({{ item.key }}, {{ item.quantity | minus: 1 }})">-</button>
+              <input
+                type="number"
+                value="{{ item.quantity }}"
+                class="sunrise-cart-items__quantity-input"
+                onchange="changeQuantity({{ item.key }}, this.value)"
+                min="1"
+              >
+              <button class="sunrise-cart-items__quantity-button" onclick="changeQuantity({{ item.key }}, {{ item.quantity | plus: 1 }})">+</button>
+            </div>
+            
+            <div class="sunrise-cart-items__price">
+              {{ item.final_line_price | money }}
+            </div>
+            
+            <button class="sunrise-cart-items__remove" onclick="removeItem({{ item.key }})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3,6 5,6 21,6"/>
+                <path d="M19,6v14a2,2,0,0,1-2,2H7a2,2,0,0,1-2-2V6M8,6V4a2,2,0,0,1,2-2h4a2,2,0,0,1,2,2V6"/>
+              </svg>
+            </button>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="sunrise-cart-items__empty">
+        <svg class="sunrise-cart-items__empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <h2 class="sunrise-cart-items__empty-title">{{ 'sections.cart.empty' | t }}</h2>
+        <p class="sunrise-cart-items__empty-description">
+          Your cart is empty. Add some items to get started.
+        </p>
+        <a href="{{ routes.all_products_collection_url }}" class="sunrise-cart-items__empty-button">
+          {{ 'general.continue_shopping' | t }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  function changeQuantity(key, quantity) {
+    if (quantity < 1) return;
+    
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: quantity
+      })
+    }).then(() => {
+      location.reload();
+    });
+  }
+  
+  function removeItem(key) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: 0
+      })
+    }).then(() => {
+      location.reload();
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Cart Items",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Cart Items Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_count",
+      "label": "Show Item Count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variant_title",
+      "label": "Show Variant Title",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

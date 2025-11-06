@@ -1,0 +1,52 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "sunrise-footer": {
+      "type": "sunrise-footer",
+      "blocks": {
+        "link_list_1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer"
+          }
+        },
+        "brand_information": {
+          "type": "brand_information",
+          "settings": {
+            "show_social": true
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "heading": "About Us",
+            "subtext": "<p>We're passionate about providing high-quality products and exceptional customer service. Our mission is to make your shopping experience enjoyable and memorable.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_1",
+        "brand_information",
+        "text"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "newsletter_enable": true,
+        "newsletter_heading": "Stay Updated",
+        "show_social": true,
+        "enable_country_selector": true,
+        "enable_language_selector": true,
+        "payment_enable": true,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "sunrise-footer"
+  ]
+}

@@ -1,0 +1,138 @@
+{{ 'sunrise-article-content.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .sunrise-article-content {
+    padding: 2rem 0;
+  }
+  
+  .sunrise-article-content__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .sunrise-article-content__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  
+  .sunrise-article-content__date {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-article-content__author {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .sunrise-article-content__content {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+  
+  .sunrise-article-content__content h1,
+  .sunrise-article-content__content h2,
+  .sunrise-article-content__content h3,
+  .sunrise-article-content__content h4,
+  .sunrise-article-content__content h5,
+  .sunrise-article-content__content h6 {
+    color: var(--color-text);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-article-content__content p {
+    margin-bottom: 1rem;
+  }
+  
+  .sunrise-article-content__content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+  }
+  
+  .sunrise-article-content__content a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  
+  .sunrise-article-content__content a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .sunrise-article-content__container {
+      padding: 0 1rem;
+    }
+    
+    .sunrise-article-content__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="sunrise-article-content">
+  <div class="sunrise-article-content__container">
+    <div class="sunrise-article-content__meta">
+      <div class="sunrise-article-content__date">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        {{ article.published_at | date: '%B %d, %Y' }}
+      </div>
+      
+      {%- if article.author -%}
+        <div class="sunrise-article-content__author">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          {{ article.author }}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="sunrise-article-content__content">
+      {{ article.content }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Article Content",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Article Content Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show Author",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

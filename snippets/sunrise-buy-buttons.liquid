@@ -1,0 +1,58 @@
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+
+<div class="sunrise-buy-buttons{% if class %} {{ class }}{% endif %}">
+  {%- form 'product', product, id: product_form_id, class: 'sunrise-buy-buttons__form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+    
+    <div class="sunrise-buy-buttons__wrapper">
+      {%- if current_variant.available -%}
+        <button
+          type="submit"
+          name="add"
+          class="sunrise-buy-buttons__button sunrise-button sunrise-button--full-width"
+          {% if current_variant.available == false %}disabled{% endif %}
+        >
+          <span class="sunrise-buy-buttons__button-text">
+            {%- if current_variant.available -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </span>
+          
+          <div class="sunrise-buy-buttons__loading-spinner hidden">
+            <svg class="sunrise-buy-buttons__spinner" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="10" cy="10" r="8"></circle>
+              <path d="M10 2a8 8 0 0 1 8 8"></path>
+            </svg>
+          </div>
+        </button>
+      {%- else -%}
+        <button
+          type="button"
+          class="sunrise-buy-buttons__button sunrise-button sunrise-button--full-width sunrise-button--disabled"
+          disabled
+        >
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      {%- endif -%}
+      
+      {%- if settings.show_dynamic_checkout -%}
+        <div class="sunrise-buy-buttons__dynamic-checkout">
+          {{ form | payment_button }}
+        </div>
+      {%- endif -%}
+    </div>
+    
+    <div class="sunrise-buy-buttons__error-message hidden" role="alert">
+      <svg class="sunrise-buy-buttons__error-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="10" cy="10" r="8"/>
+        <path d="M8 8l4 4 4-4"/>
+      </svg>
+      <span class="sunrise-buy-buttons__error-text"></span>
+    </div>
+  {%- endform -%}
+</div>

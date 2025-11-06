@@ -1,0 +1,54 @@
+{
+  "sections": {
+    "sunrise_page_builder": {
+      "type": "sunrise-page-builder",
+      "settings": {
+        "show_page_header": true,
+        "page_title": "Welcome to Our Page",
+        "title_size": "h1",
+        "page_subtitle": "<p>This is a flexible page built with our page builder. You can easily customize the content by adding, removing, or reordering blocks.</p>",
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 40
+      },
+      "blocks": {
+        "text_block_1": {
+          "type": "text_block",
+          "settings": {
+            "heading": "About Us",
+            "text": "<p>We are passionate about creating amazing experiences for our customers. Our team is dedicated to providing the highest quality products and services.</p><p>Founded with a vision to make a difference, we continue to innovate and grow while staying true to our core values.</p>"
+          }
+        },
+        "image_text_block_1": {
+          "type": "image_text_block",
+          "settings": {
+            "image": "",
+            "heading": "Our Mission",
+            "text": "<p>To deliver exceptional value and create lasting relationships with our customers through innovative solutions and outstanding service.</p>",
+            "button_text": "Learn More",
+            "button_link": "/pages/about",
+            "button_style": "primary"
+          }
+        },
+        "cta_block_1": {
+          "type": "cta_block",
+          "settings": {
+            "heading": "Ready to Get Started?",
+            "text": "<p>Join thousands of satisfied customers who trust us with their needs.</p>",
+            "button_text": "Shop Now",
+            "button_link": "/collections/all",
+            "button_style": "primary"
+          }
+        }
+      },
+      "block_order": [
+        "text_block_1",
+        "image_text_block_1",
+        "cta_block_1"
+      ]
+    }
+  },
+  "order": [
+    "sunrise_page_builder"
+  ]
+}

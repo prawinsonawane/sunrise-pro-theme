@@ -1,0 +1,394 @@
+/* Sunrise Pro - Price Styles */
+
+.sunrise-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sunrise-price__current {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.sunrise-price__compare {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.sunrise-price__unit {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin-left: 0.25rem;
+}
+
+.sunrise-price__badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--color-sale);
+  color: var(--color-sale-contrast);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 0.5rem;
+}
+
+.sunrise-price__badge--sale {
+  background-color: var(--color-sale);
+  color: var(--color-sale-contrast);
+}
+
+.sunrise-price__badge--new {
+  background-color: var(--color-success);
+  color: var(--color-success-contrast);
+}
+
+.sunrise-price__badge--limited {
+  background-color: var(--color-warning);
+  color: var(--color-warning-contrast);
+}
+
+/* Price in Product Cards */
+.sunrise-product-card .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-product-card .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-product-card .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Cart */
+.sunrise-cart-item .sunrise-price {
+  justify-content: flex-end;
+}
+
+.sunrise-cart-item .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-cart-item .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Cart Drawer */
+.sunrise-cart-drawer .sunrise-price {
+  justify-content: flex-start;
+}
+
+.sunrise-cart-drawer .sunrise-price__current {
+  font-size: 0.875rem;
+}
+
+.sunrise-cart-drawer .sunrise-price__compare {
+  font-size: 0.75rem;
+}
+
+/* Price in Search Results */
+.sunrise-search-results .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-search-results .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-search-results .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Collection Grid */
+.sunrise-collection-grid .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-collection-grid .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-collection-grid .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Related Products */
+.sunrise-related-products .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-related-products .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-related-products .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in AI Recommendations */
+.sunrise-ai-recommendations .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-ai-recommendations .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-ai-recommendations .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Featured Collection */
+.sunrise-featured-collection .sunrise-price {
+  margin-top: 0.5rem;
+}
+
+.sunrise-featured-collection .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-featured-collection .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Featured Product */
+.sunrise-featured-product .sunrise-price {
+  margin-bottom: 1rem;
+}
+
+.sunrise-featured-product .sunrise-price__current {
+  font-size: 1.5rem;
+}
+
+.sunrise-featured-product .sunrise-price__compare {
+  font-size: 1.125rem;
+}
+
+/* Price in Product Page */
+.sunrise-product .sunrise-price {
+  margin-bottom: 1.5rem;
+}
+
+.sunrise-product .sunrise-price__current {
+  font-size: 1.5rem;
+}
+
+.sunrise-product .sunrise-price__compare {
+  font-size: 1.125rem;
+}
+
+/* Price in Cart Summary */
+.sunrise-cart-summary .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-cart-summary .sunrise-price__current {
+  font-size: 1.125rem;
+}
+
+.sunrise-cart-summary .sunrise-price__compare {
+  font-size: 1rem;
+}
+
+/* Price in Order Summary */
+.sunrise-order-summary .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-order-summary .sunrise-price__current {
+  font-size: 1.125rem;
+}
+
+.sunrise-order-summary .sunrise-price__compare {
+  font-size: 1rem;
+}
+
+/* Price in Checkout */
+.sunrise-checkout .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-checkout .sunrise-price__current {
+  font-size: 1.125rem;
+}
+
+.sunrise-checkout .sunrise-price__compare {
+  font-size: 1rem;
+}
+
+/* Price in Invoice */
+.sunrise-invoice .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-invoice .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-invoice .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Receipt */
+.sunrise-receipt .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-receipt .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-receipt .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Email */
+.sunrise-email .sunrise-price {
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sunrise-email .sunrise-price__current {
+  font-size: 1rem;
+}
+
+.sunrise-email .sunrise-price__compare {
+  font-size: 0.875rem;
+}
+
+/* Price in Print */
+@media print {
+  .sunrise-price {
+    color: black !important;
+  }
+  
+  .sunrise-price__current {
+    color: black !important;
+  }
+  
+  .sunrise-price__compare {
+    color: black !important;
+  }
+  
+  .sunrise-price__unit {
+    color: black !important;
+  }
+  
+  .sunrise-price__badge {
+    background-color: transparent !important;
+    color: black !important;
+    border: 1px solid black;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sunrise-price__current {
+    font-size: 1.125rem;
+  }
+  
+  .sunrise-price__compare {
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-product .sunrise-price__current {
+    font-size: 1.25rem;
+  }
+  
+  .sunrise-product .sunrise-price__compare {
+    font-size: 1rem;
+  }
+  
+  .sunrise-featured-product .sunrise-price__current {
+    font-size: 1.25rem;
+  }
+  
+  .sunrise-featured-product .sunrise-price__compare {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sunrise-price__current {
+    font-size: 1rem;
+  }
+  
+  .sunrise-price__compare {
+    font-size: 0.75rem;
+  }
+  
+  .sunrise-product .sunrise-price__current {
+    font-size: 1.125rem;
+  }
+  
+  .sunrise-product .sunrise-price__compare {
+    font-size: 0.875rem;
+  }
+  
+  .sunrise-featured-product .sunrise-price__current {
+    font-size: 1.125rem;
+  }
+  
+  .sunrise-featured-product .sunrise-price__compare {
+    font-size: 0.875rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .sunrise-price__current {
+    color: var(--color-primary-light);
+  }
+  
+  .sunrise-price__compare {
+    color: var(--color-text-muted-dark);
+  }
+  
+  .sunrise-price__unit {
+    color: var(--color-text-muted-dark);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .sunrise-price__current {
+    font-weight: 700;
+  }
+  
+  .sunrise-price__compare {
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+  
+  .sunrise-price__badge {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .sunrise-price {
+    transition: none;
+  }
+  
+  .sunrise-price__badge {
+    transition: none;
+  }
+}

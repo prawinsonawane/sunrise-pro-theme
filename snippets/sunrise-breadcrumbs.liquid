@@ -1,0 +1,39 @@
+{%- liquid
+  assign breadcrumb_separator = '›'
+  assign breadcrumb_items = ''
+  
+  if template contains 'product'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    if collection
+      assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><a href="' | append: collection.url | append: '" class="sunrise-breadcrumbs__link">' | append: collection.title | append: '</a></li>'
+    endif
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: product.title | append: '</span></li>'
+  elsif template contains 'collection'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: collection.title | append: '</span></li>'
+  elsif template contains 'article'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><a href="' | append: blog.url | append: '" class="sunrise-breadcrumbs__link">' | append: blog.title | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: article.title | append: '</span></li>'
+  elsif template contains 'page'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: page.title | append: '</span></li>'
+  elsif template contains 'blog'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: blog.title | append: '</span></li>'
+  elsif template contains 'search'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: 'templates.search.title' | t | append: '</span></li>'
+  elsif template contains 'cart'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><a href="/" class="sunrise-breadcrumbs__link">' | append: 'general.breadcrumbs.home' | t | append: '</a></li>'
+    assign breadcrumb_items = breadcrumb_items | append: '<li class="sunrise-breadcrumbs__item"><span class="sunrise-breadcrumbs__separator">' | append: breadcrumb_separator | append: '</span><span class="sunrise-breadcrumbs__current">' | append: 'general.breadcrumbs.cart' | t | append: '</span></li>'
+  endif
+-%}
+
+{%- if breadcrumb_items != blank -%}
+  <nav class="sunrise-breadcrumbs{% if class %} {{ class }}{% endif %}" aria-label="Breadcrumb">
+    <ol class="sunrise-breadcrumbs__list">
+      {{ breadcrumb_items }}
+    </ol>
+  </nav>
+{%- endif -%}

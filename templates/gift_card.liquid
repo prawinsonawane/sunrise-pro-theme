@@ -1,0 +1,80 @@
+<!doctype html>
+<html class="js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ 'gift_cards.issued.title' | t }}</title>
+    <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+    {{ content_for_header }}
+    {{ 'sunrise-base.css' | asset_url | stylesheet_tag }}
+    {{ 'sunrise-components.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="template-giftcard">
+    <div class="gift-card">
+      <div class="gift-card__container">
+        <header class="gift-card__header">
+          {% if settings.logo != blank %}
+            <div class="gift-card__logo">
+              {% assign logo_alt = settings.logo.alt | default: shop.name | escape %}
+              {% assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio %}
+              {{ settings.logo | image_url: width: 600 | image_tag: class: 'gift-card__logo-image', alt: logo_alt, height: logo_height, width: settings.logo_width }}
+            </div>
+          {% else %}
+            <h1 class="gift-card__shop-name">{{ shop.name }}</h1>
+          {% endif %}
+        </header>
+
+        <main class="gift-card__content">
+          <h2 class="gift-card__title">{{ 'gift_cards.issued.subtext' | t }}</h2>
+          
+          {% if gift_card.expired %}
+            <p class="gift-card__expired">{{ 'gift_cards.issued.expired' | t }}</p>
+          {% endif %}
+
+          {% if gift_card.enabled == false %}
+            <p class="gift-card__disabled">{{ 'gift_cards.issued.disabled' | t }}</p>
+          {% endif %}
+
+          <div class="gift-card__card">
+            <div class="gift-card__card-header">
+              <h3 class="gift-card__card-title">{{ gift_card.code | format_code }}</h3>
+            </div>
+            <div class="gift-card__card-body">
+              <div class="gift-card__card-value">
+                <span class="gift-card__value-amount">{{ gift_card.balance | money }}</span>
+                <span class="gift-card__value-currency">{{ gift_card.currency }}</span>
+              </div>
+              {% if gift_card.expired != true and gift_card.enabled %}
+                <div class="gift-card__card-actions">
+                  <a href="{{ shop.url }}" class="gift-card__shop-button sunrise-button" target="_blank">
+                    {{ 'gift_cards.issued.shop_link' | t }}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if gift_card.expired != true and gift_card.enabled %}
+            <div class="gift-card__qr-code">
+              <img src="{{ gift_card.qr_identifier | qr_code_url }}" alt="{{ 'gift_cards.issued.qr_image' | t }}" />
+            </div>
+          {% endif %}
+
+          <div class="gift-card__info">
+            <p class="gift-card__code-label">{{ 'gift_cards.issued.code' | t }}</p>
+            <p class="gift-card__code">{{ gift_card.code | format_code }}</p>
+            <p class="gift-card__instructions">
+              {% if gift_card.expired != true and gift_card.enabled %}
+                {{ 'gift_cards.issued.redeem' | t }}
+              {% endif %}
+            </p>
+          </div>
+        </main>
+      </div>
+    </div>
+
+  </body>
+</html>
+

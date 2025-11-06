@@ -1,0 +1,360 @@
+{%- liquid
+  assign product = product | default: recommendation_product
+  assign show_rating = show_rating | default: true
+  assign show_badge = show_badge | default: true
+  assign show_ai_badge = show_ai_badge | default: true
+  assign card_class = card_class | default: 'sunrise-card'
+  assign image_size = image_size | default: 'medium'
+-%}
+
+<div class="sunrise-ai-recommendation-card {{ card_class }}" data-product-id="{{ product.id }}">
+  {%- if show_badge and product.compare_at_price and product.compare_at_price > product.price -%}
+    <div class="sunrise-ai-recommendation-card__badge">
+      {{ 'products.product.on_sale' | t }}
+    </div>
+  {%- endif -%}
+  
+  {%- if show_ai_badge -%}
+    <div class="sunrise-ai-recommendation-card__ai-badge">
+      <span class="sunrise-ai-recommendation-card__ai-icon">🤖</span>
+      {{ 'sections.ai_recommendations.ai_powered' | t }}
+    </div>
+  {%- endif -%}
+
+  <div class="sunrise-ai-recommendation-card__image">
+    <a href="{{ product.url }}" class="sunrise-ai-recommendation-card__image-link">
+      {%- if product.featured_image -%}
+        {%- assign image_height = product.featured_image.width | divided_by: product.featured_image.aspect_ratio -%}
+        {{
+          product.featured_image
+          | image_url: width: 400
+          | image_tag:
+            class: 'sunrise-ai-recommendation-card__img',
+            loading: 'lazy',
+            widths: '165, 360, 533, 720, 940, 1066, 1280',
+            height: image_height,
+            width: product.featured_image.width,
+            alt: product.featured_image.alt | escape
+        }}
+      {%- else -%}
+        <div class="sunrise-ai-recommendation-card__placeholder">
+          {{ 'product-1' | placeholder_svg_tag: 'sunrise-ai-recommendation-card__placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="sunrise-ai-recommendation-card__content">
+    <h3 class="sunrise-ai-recommendation-card__title">
+      <a href="{{ product.url }}" class="sunrise-ai-recommendation-card__title-link">
+        {{ product.title | escape }}
+      </a>
+    </h3>
+
+    {%- if product.vendor != blank -%}
+      <div class="sunrise-ai-recommendation-card__vendor">
+        {{ product.vendor | escape }}
+      </div>
+    {%- endif -%}
+
+    <div class="sunrise-ai-recommendation-card__price">
+      {%- if product.compare_at_price and product.compare_at_price > product.price -%}
+        <span class="sunrise-ai-recommendation-card__price--sale">
+          {{ product.price | money }}
+        </span>
+        <span class="sunrise-ai-recommendation-card__price--compare">
+          {{ product.compare_at_price | money }}
+        </span>
+      {%- else -%}
+        <span class="sunrise-ai-recommendation-card__price--regular">
+          {{ product.price | money }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- if show_rating -%}
+      <div class="sunrise-ai-recommendation-card__rating">
+        {%- assign rating = product.metafields.reviews.rating.value | default: 4.5 -%}
+        {%- assign review_count = product.metafields.reviews.rating_count.value | default: 23 -%}
+        
+        <div class="sunrise-ai-recommendation-card__stars">
+          {%- for i in (1..5) -%}
+            {%- if i <= rating -%}
+              <svg class="sunrise-ai-recommendation-card__star sunrise-ai-recommendation-card__star--filled" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- elsif i == rating + 0.5 -%}
+              <svg class="sunrise-ai-recommendation-card__star sunrise-ai-recommendation-card__star--half" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- else -%}
+              <svg class="sunrise-ai-recommendation-card__star sunrise-ai-recommendation-card__star--empty" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <span class="sunrise-ai-recommendation-card__rating-text">
+          {{ rating }} ({{ review_count }} {{ 'products.product.reviews' | t }})
+        </span>
+      </div>
+    {%- endif -%}
+
+    <div class="sunrise-ai-recommendation-card__actions">
+      <a href="{{ product.url }}" class="sunrise-ai-recommendation-card__button sunrise-ai-recommendation-card__button--primary">
+        {{ 'products.product.view_product' | t }}
+      </a>
+      <button class="sunrise-ai-recommendation-card__button sunrise-ai-recommendation-card__button--secondary" 
+              onclick="SunriseAIRecommendations.addToCart({{ product.selected_or_first_available_variant.id }})">
+        {{ 'products.product.add_to_cart' | t }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sunrise-ai-recommendation-card {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+  .sunrise-ai-recommendation-card:hover {
+    transform: translateY(-0.4rem);
+  }
+
+  .sunrise-ai-recommendation-card__badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+    padding: 0.4rem 0.8rem;
+    background: rgb(var(--color-accent));
+    color: rgb(var(--color-button-text));
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: var(--inputs-radius);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sunrise-ai-recommendation-card__ai-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 2;
+    padding: 0.4rem 0.8rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--inputs-radius);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 0.2rem 0.8rem rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .sunrise-ai-recommendation-card__ai-icon {
+    font-size: 1.2rem;
+  }
+
+  .sunrise-ai-recommendation-card__image {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    border-radius: var(--product-card-corner-radius);
+    overflow: hidden;
+    background: rgba(var(--color-foreground), 0.05);
+    margin-bottom: 1.6rem;
+  }
+
+  .sunrise-ai-recommendation-card__image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sunrise-ai-recommendation-card__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .sunrise-ai-recommendation-card:hover .sunrise-ai-recommendation-card__img {
+    transform: scale(1.05);
+  }
+
+  .sunrise-ai-recommendation-card__placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sunrise-ai-recommendation-card__placeholder-svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .sunrise-ai-recommendation-card__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.8rem;
+  }
+
+  .sunrise-ai-recommendation-card__title {
+    margin-bottom: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .sunrise-ai-recommendation-card__title-link {
+    color: rgb(var(--color-foreground));
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .sunrise-ai-recommendation-card__title-link:hover {
+    color: rgb(var(--color-accent));
+  }
+
+  .sunrise-ai-recommendation-card__vendor {
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    color: rgba(var(--color-foreground), 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sunrise-ai-recommendation-card__price {
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+  }
+
+  .sunrise-ai-recommendation-card__price--sale {
+    color: rgb(var(--color-accent));
+  }
+
+  .sunrise-ai-recommendation-card__price--compare {
+    margin-left: 0.8rem;
+    color: rgba(var(--color-foreground), 0.6);
+    text-decoration: line-through;
+    font-weight: 400;
+  }
+
+  .sunrise-ai-recommendation-card__rating {
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .sunrise-ai-recommendation-card__stars {
+    display: flex;
+    gap: 0.2rem;
+  }
+
+  .sunrise-ai-recommendation-card__star {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .sunrise-ai-recommendation-card__star--filled {
+    color: #fbbf24;
+  }
+
+  .sunrise-ai-recommendation-card__star--half {
+    color: #fbbf24;
+  }
+
+  .sunrise-ai-recommendation-card__star--empty {
+    color: rgba(var(--color-foreground), 0.3);
+  }
+
+  .sunrise-ai-recommendation-card__rating-text {
+    font-size: 1.2rem;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .sunrise-ai-recommendation-card__actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .sunrise-ai-recommendation-card__button {
+    flex: 1;
+    padding: 1rem 1.6rem;
+    text-decoration: none;
+    border-radius: var(--inputs-radius);
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .sunrise-ai-recommendation-card__button--primary {
+    background: rgb(var(--color-accent));
+    color: rgb(var(--color-button-text));
+  }
+
+  .sunrise-ai-recommendation-card__button--primary:hover {
+    background: rgba(var(--color-accent), 0.9);
+  }
+
+  .sunrise-ai-recommendation-card__button--secondary {
+    background: transparent;
+    color: rgb(var(--color-accent));
+    border: 0.1rem solid rgb(var(--color-accent));
+  }
+
+  .sunrise-ai-recommendation-card__button--secondary:hover {
+    background: rgb(var(--color-accent));
+    color: rgb(var(--color-button-text));
+  }
+
+  @media screen and (max-width: 749px) {
+    .sunrise-ai-recommendation-card__content {
+      padding: 0;
+    }
+
+    .sunrise-ai-recommendation-card__title {
+      font-size: 1.4rem;
+    }
+
+    .sunrise-ai-recommendation-card__vendor {
+      font-size: 1.1rem;
+    }
+
+    .sunrise-ai-recommendation-card__price {
+      font-size: 1.3rem;
+    }
+
+    .sunrise-ai-recommendation-card__button {
+      padding: 0.8rem 1.2rem;
+      font-size: 1.3rem;
+    }
+  }
+</style>

@@ -1,0 +1,77 @@
+{%- liquid
+  assign share_url = shop.url | append: product.url
+  assign share_title = product.title | url_encode
+  assign share_description = product.description | strip_html | url_encode
+  assign share_image = product.featured_media | image_url: width: 1200
+-%}
+
+<div class="sunrise-share-button{% if class %} {{ class }}{% endif %}">
+  <button type="button" class="sunrise-share-button__trigger sunrise-button sunrise-button--secondary" aria-expanded="false" aria-controls="Share-{{ section.id }}">
+    <svg class="sunrise-share-button__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 12v-1a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v1"/>
+      <path d="M8 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+      <path d="M12 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+      <path d="M4 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+    </svg>
+    {{ 'products.product.share' | t }}
+  </button>
+
+  <div class="sunrise-share-button__dropdown hidden" id="Share-{{ section.id }}">
+    <div class="sunrise-share-button__dropdown-content">
+      <div class="sunrise-share-button__dropdown-header">
+        <h3 class="sunrise-share-button__dropdown-title">{{ 'products.product.share' | t }}</h3>
+        <button type="button" class="sunrise-share-button__close" aria-label="{{ 'accessibility.close' | t }}">
+          <svg class="sunrise-share-button__close-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="4" x2="4" y2="12"></line>
+            <line x1="4" y1="4" x2="12" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sunrise-share-button__links">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" 
+           class="sunrise-share-button__link sunrise-share-button__link--facebook" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="{{ 'general.social.alt_text.share_on_facebook' | t }}">
+          <svg class="sunrise-share-button__link-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M18.05.811q.439 0 .744.305t.305.744v16.637q0 .439-.305.744t-.744.305h-4.732v-7.221h2.415l.342-2.854h-2.757v-1.83q0-.659.293-1t1.073-.342h1.488V3.08q-.976-.098-2.171-.098-1.634 0-2.635.964t-1 2.634v2.075H8.122v2.854h2.415v7.221H5.805q-.439 0-.744-.305t-.305-.744V1.86q0-.439.305-.744t.744-.305h12.24z"/>
+          </svg>
+          <span class="sunrise-share-button__link-text">Facebook</span>
+        </a>
+
+        <a href="https://twitter.com/intent/tweet?url={{ share_url }}&text={{ share_title }}" 
+           class="sunrise-share-button__link sunrise-share-button__link--twitter" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="{{ 'general.social.alt_text.share_on_twitter' | t }}">
+          <svg class="sunrise-share-button__link-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M19.551 4.208q-.815 1.202-1.956 2.038 0 .082.02.255t.02.255q0 1.589-.469 3.179t-1.426 3.036-2.272 2.567-3.158 1.793-3.963.672q-3.301 0-6.031-1.773.408.051.816.051 2.351 0 4.233-1.449-1.099-.02-1.956-1.039t-1.039-1.956q.346.082.754.082.55 0 1.039-.163-1.149-.224-1.956-1.149t-.806-2.041v-.051q.693.387 1.499.408-1.149-.755-1.149-2.041 0-.408.102-.816t.306-.754q1.224 1.346 2.987 2.151t3.757.918q-.102-.408-.102-.816 0-1.469 1.039-2.508t2.508-1.039q1.469 0 2.508 1.039t1.039 2.508q0 .898-.449 1.673 1.346-.275 2.508-1.039t1.673-2.151z"/>
+          </svg>
+          <span class="sunrise-share-button__link-text">Twitter</span>
+        </a>
+
+        <a href="https://pinterest.com/pin/create/button/?url={{ share_url }}&media={{ share_image }}&description={{ share_description }}" 
+           class="sunrise-share-button__link sunrise-share-button__link--pinterest" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="{{ 'general.social.alt_text.share_on_pinterest' | t }}">
+          <svg class="sunrise-share-button__link-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.017 0C4.396 0 .017 4.396.017 10.017c0 4.177 2.578 7.725 6.207 9.188-.086-.791-.164-2.006.034-2.868.181-.78 1.172-4.966 1.172-4.966s-.299-.599-.299-1.484c0-1.388.806-2.427 1.809-2.427.852 0 1.264.64 1.264 1.407 0 .858-.546 2.14-.828 3.33-.236.995.499 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.177-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.969-.527-2.292-1.155l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.624 0 10.017-4.396 10.017-10.017C20.034 4.396 15.641.017 10.017.017z"/>
+          </svg>
+          <span class="sunrise-share-button__link-text">Pinterest</span>
+        </a>
+
+        <button type="button" class="sunrise-share-button__link sunrise-share-button__link--copy" data-share-url="{{ share_url }}">
+          <svg class="sunrise-share-button__link-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span class="sunrise-share-button__link-text">Copy link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'sunrise-share-button.js' | asset_url }}" defer="defer"></script>
