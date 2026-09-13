@@ -30,7 +30,7 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      {%- form 'customer', class: 'sunrise-newsletter__form', id: 'NewsletterForm-' | append: section.id -%}
+      {%- form section.id -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
         
         <div class="sunrise-newsletter__form-wrapper">
@@ -197,3 +197,14 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- form 'customer', class: 'sunrise-newsletter__form', id: 'NewsletterForm-'
+    | append: section.id -%}"
+  to: "{%- form section.id -%}"
+  position: 1354..1377
+{% endcomment %}

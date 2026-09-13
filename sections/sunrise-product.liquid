@@ -44,7 +44,7 @@
           {%- if product.selected_or_first_available_variant.featured_media != null -%}
             {%- assign media = product.selected_or_first_available_variant.featured_media -%}
             <div class="sunrise-media__item sunrise-media__item--single">
-              {% render 'sunrise-media', media: media, show_zoom: section.settings.image_zoom == 'hover', lazy_load: false %}
+              {% render 'sunrise-media', media: media, show_zoom: section.settings.image_zoom, lazy_load: false %}
             </div>
           {%- endif -%}
         </div>
@@ -378,3 +378,15 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'sunrise-media', media: media, show_zoom: section.settings.image_zoom
+    == 'hover', lazy_load: false %}"
+  to: "{% render 'sunrise-media', media: media, show_zoom: section.settings.image_zoom,
+    lazy_load: false %}"
+  position: 2095..2195
+{% endcomment %}
